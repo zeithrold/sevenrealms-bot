@@ -10,6 +10,8 @@ RUN python install-poetry.py --yes
 
 ENV PATH="${PATH}:/root/.local/bin"
 
+ENV PORT=8080
+
 RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
 
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.9
@@ -23,3 +25,5 @@ RUN pip install --no-cache-dir --upgrade -r requirements.txt
 RUN rm requirements.txt
 
 COPY ./ /app/
+
+ENTRYPOINT [ "uvicorn", "bot:app", "--port", "${PORT}", "--workers", "1" ]
