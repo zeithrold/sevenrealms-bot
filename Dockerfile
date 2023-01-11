@@ -1,4 +1,4 @@
-FROM python:3.9 as requirements-stage
+FROM python:3.9 as requirements
 
 WORKDIR /tmp
 
@@ -10,15 +10,15 @@ RUN python install-poetry.py --yes
 
 ENV PATH="${PATH}:/root/.local/bin"
 
-ENV PORT=8080
-
 RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
 
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.9
+FROM python:3.9
 
 WORKDIR /app
 
-COPY --from=requirements-stage /tmp/requirements.txt /app/requirements.txt
+ENV PORT=8080
+
+COPY --from=requirements /tmp/requirements.txt /app/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
