@@ -26,4 +26,4 @@ RUN rm requirements.txt
 
 COPY ./ /app/
 
-CMD uvicorn bot:app --workers 1 --env-file .env.prod
+CMD uvicorn --workers 1 --env-file .env.prod --port 8080 --host 0.0.0.0 bot:app
