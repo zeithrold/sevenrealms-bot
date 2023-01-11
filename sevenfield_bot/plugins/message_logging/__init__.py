@@ -5,7 +5,6 @@ import uuid
 from .config import config
 
 async def message_checker(event: GroupMessageEvent):
-    print(event.group_id)
     return str(event.group_id) in config.qq_logging_group
 
 rule = Rule(message_checker)

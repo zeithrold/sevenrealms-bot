@@ -12,9 +12,8 @@ rule = Rule(message_checker, to_me)
 
 matcher = on_message(rule=rule)
 
-# @matcher.handle()
-# async def _(bot: Bot, event: GroupMessageEvent):
-#     api = GhApi(gh_host=config.github_api_endpoint, token=config.github_access_token)
-#     first_commit = api.repos.list_commits(owner="zeithrold", repo="sevenfield_bot")[0]
-#     print(first_commit)
-#     await bot.send_group_msg(group_id=event.group_id, message=f"[CQ:reply,id={event.message_id}]pong")
+@matcher.handle()
+async def _(bot: Bot, event: GroupMessageEvent):
+    api = GhApi(gh_host=config.github_api_endpoint, token=config.github_access_token)
+    first_commit = api.repos.list_commits(owner="zeithrold", repo="sevenfield-bot")[0]
+    await bot.send_group_msg(group_id=event.group_id, message=f"[CQ:reply,id={event.message_id}] [GitHub]最近一次部署的Git Commit: {first_commit.sha[:8]}")
