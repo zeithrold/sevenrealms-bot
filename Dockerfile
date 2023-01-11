@@ -26,4 +26,4 @@ RUN rm requirements.txt
 
 COPY ./ /app/
 
-ENTRYPOINT [ "uvicorn", "bot:app", "--port", "${PORT}", "--workers", "1" ]
+CMD ["uvicorn", "bot:app", "--port", "${PORT}", "--workers", "1"]
