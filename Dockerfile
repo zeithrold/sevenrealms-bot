@@ -26,4 +26,4 @@ RUN rm requirements.txt
 
 COPY ./ /app/
 
-CMD uvicorn bot:app --workers 1
+CMD uvicorn bot:app --workers 1 --env-file .env.prod
