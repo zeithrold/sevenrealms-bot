@@ -52,7 +52,7 @@ async def _(event: WorkflowRunRequested):
     message = (
         f"[CQ:at,qq={superuser}]\n"
         "[GitHub]\n"
-        "您的zeithrold/sevenfield-bot项目已触发Workflow Run: \n"
+        "您的项目zeithrold/sevenfield-bot已触发Workflow Run: \n"
         f"{event.payload.workflow_run.path} #{event.payload.workflow_run.run_number}\n"
         "详情请点击链接：\n"
         f"{event.payload.workflow_run.html_url}"
@@ -71,7 +71,7 @@ async def _(event: WorkflowRunCompleted):
     message = (
         f"[CQ:at,qq={superuser}]\n"
         "[GitHub]\n"
-        "您的zeithrold/sevenfield-bot项目已完成Workflow Run: \n"
+        "您的项目zeithrold/sevenfield-bot已完成Workflow Run: \n"
         f"{event.payload.workflow_run.path} #{event.payload.workflow_run.run_number}\n"
         f'运行结果：{"成功" if event.payload.workflow_run.conclusion == "success" else "异常"}'
         "\n"
