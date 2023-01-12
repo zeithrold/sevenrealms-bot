@@ -1,4 +1,6 @@
 from nonebot import require, get_driver
+from nonebot.adapters import Bot
+from nonebot.adapters.onebot.v11 import Bot as OnebotBot
 import time
 
 driver = get_driver()
@@ -22,19 +24,28 @@ def handler():
         orm.commit()
 
 @driver.on_bot_connect
-def handler():
-    require("sevenfield_bot.plugins.db")
-    from sevenfield_bot.plugins.db import Lifecycle
-    from pony import orm
-    with orm.db_session:
-        Lifecycle(time=int(time.time()), type="bot_connect")
-        orm.commit()
+def handler(bot: Bot):
+    require("sevenfield_bot.plugins.global_config")
+    from sevenfield_bot.plugins.global_config import global_config
+    if isinstance(bot, OnebotBot):
+        require("sevenfield_bot.plugins.db")
+        from pony import orm
+        from sevenfield_bot.plugins.db import Lifecycle
+        with orm.db_session:
+            Lifecycle(time=int(time.time()), type="bot_connect")
+            orm.commit()
+        bot.send_group_msg(group_id=int(global_config.qq_main_group), message=f"[CQ:at,qq={list(driver.config.superusers)[0]}]您的机器人已连接。")
+
 
 @driver.on_bot_disconnect
-def handler():
-    require("sevenfield_bot.plugins.db")
-    from sevenfield_bot.plugins.db import Lifecycle
-    from pony import orm
-    with orm.db_session:
-        Lifecycle(time=int(time.time()), type="bot_disconnect")
-        orm.commit()
+def handler(bot: Bot):
+    require("sevenfield_bot.plugins.global_config")
+    from sevenfield_bot.plugins.global_config import global_config
+    if isinstance(bot, OnebotBot):
+        require("sevenfield_bot.plugins.db")
+        from pony import orm
+        from sevenfield_bot.plugins.db import Lifecycle
+        with orm.db_session:
+            Lifecycle(time=int(time.time()), type="bot_connect")
+            orm.commit()
+        bot.send_group_msg(group_id=int(global_config.qq_main_group), message=f"[CQ:at,qq={list(driver.config.superusers)[0]}]您的机器人已断开。")
