@@ -21,11 +21,11 @@ async def _(event: PushEvent):
         c.id[:8]: c.message
         for c in event.payload.commits
     }
-    commit_str = "\n".join("  {sha}: {message}".format(
+    commit_str = "\n".join("  - {sha}: {message}".format(
         sha=sha, message=message) for sha, message in commits.items())
     message = (f"[CQ:at,qq={superuser}]\n"
                "[GitHub]\n"
-               f"您的项目zeithrold/sevenfield-bot已经提交{last_commit_sha}等共{commit_counts}个Git Commit。\n"
+               f"您的项目 {event.payload.repository.full_name} 已经提交 {last_commit_sha} 等共{commit_counts}个Git Commit。\n"
                "具体Commit列表如下:\n"
                f"{commit_str}")
     await bot.send_group_msg(group_id=main_group, message=message)
@@ -52,7 +52,7 @@ async def _(event: WorkflowRunRequested):
     message = (
         f"[CQ:at,qq={superuser}]\n"
         "[GitHub]\n"
-        "您的项目zeithrold/sevenfield-bot已触发Workflow Run: \n"
+        f"您的项目 {event.payload.repository.full_name} 已触发 Workflow Run: \n"
         f"{event.payload.workflow_run.path} #{event.payload.workflow_run.run_number}\n"
         "详情请点击链接：\n"
         f"{event.payload.workflow_run.html_url}"
@@ -71,10 +71,9 @@ async def _(event: WorkflowRunCompleted):
     message = (
         f"[CQ:at,qq={superuser}]\n"
         "[GitHub]\n"
-        "您的项目zeithrold/sevenfield-bot已完成Workflow Run: \n"
+        f"您的项目{event.payload.repository.full_name} 已完成 Workflow Run: \n"
         f"{event.payload.workflow_run.path} #{event.payload.workflow_run.run_number}\n"
-        f'运行结果：{"成功" if event.payload.workflow_run.conclusion == "success" else "异常"}'
-        "\n"
+        f'运行结果：{"成功" if event.payload.workflow_run.conclusion == "success" else "异常"}\n'
         "详情请点击链接：\n"
         f"{event.payload.workflow_run.html_url}")
     await bot.send_group_msg(group_id=main_group, message=message)
