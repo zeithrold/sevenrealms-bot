@@ -18,7 +18,7 @@ async def _(event: PushEvent):
     self_id = global_config.qq_self_id
     bot: Bot = get_bot(self_id)
     commits = {
-        c.tree_id[:8]: c.message
+        c.id[:8]: c.message
         for c in event.payload.commits
     }
     commit_str = "\n".join("  {sha}: {message}".format(
@@ -41,12 +41,40 @@ async def _(event: PingEvent):
     await bot.send_group_msg(group_id=main_group, message=f"[CQ:at,qq={superuser}] [GitHub]刚才GitHub给您发送了一个Ping。")
 
 
-# @matcher.handle()
-# async def _(event: WorkflowRunRequested):
-#     require("sevenfield_bot.plugins.global_config")
-#     from sevenfield_bot.plugins.global_config import global_config
-#     main_group = int(global_config.qq_main_group)
-#     self_id = global_config.qq_self_id
-#     event.payload.workflow_run.name
-#     bot: Bot = get_bot(self_id)
-#     await bot.send_group_msg(group_id=main_group, message=f"[CQ:at,qq={superuser}] [GitHub]刚才GitHub给您发送了一个Ping。")
+@matcher.handle()
+async def _(event: WorkflowRunRequested):
+    require("sevenfield_bot.plugins.global_config")
+    from sevenfield_bot.plugins.global_config import global_config
+    main_group = int(global_config.qq_main_group)
+    self_id = global_config.qq_self_id
+    event.payload.workflow_run.name
+    bot: Bot = get_bot(self_id)
+    message = (
+        f"[CQ:at,qq={superuser}]\n"
+        "[GitHub]\n"
+        "您的zeithrold/sevenfield-bot项目已触发Workflow Run: \n"
+        f"{event.payload.workflow_run.path} #{event.payload.workflow_run.run_number}\n"
+        "详情请点击链接：\n"
+        f"{event.payload.workflow_run.html_url}"
+    )
+    await bot.send_group_msg(group_id=main_group, message=message)
+
+
+@matcher.handle()
+async def _(event: WorkflowRunCompleted):
+    require("sevenfield_bot.plugins.global_config")
+    from sevenfield_bot.plugins.global_config import global_config
+    main_group = int(global_config.qq_main_group)
+    self_id = global_config.qq_self_id
+    event.payload.workflow_run.name
+    bot: Bot = get_bot(self_id)
+    message = (
+        f"[CQ:at,qq={superuser}]\n"
+        "[GitHub]\n"
+        "您的zeithrold/sevenfield-bot项目已完成Workflow Run: \n"
+        f"{event.payload.workflow_run.path} #{event.payload.workflow_run.run_number}\n"
+        f'运行结果：{"成功" if event.payload.workflow_run.conclusion == "success" else "异常"}'
+        "\n"
+        "详情请点击链接：\n"
+        f"{event.payload.workflow_run.html_url}")
+    await bot.send_group_msg(group_id=main_group, message=message)
