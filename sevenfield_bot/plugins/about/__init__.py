@@ -15,6 +15,7 @@ rule = Rule(message_checker, to_me)
 
 matcher = on_message(rule=rule)
 
+
 @matcher.handle()
 async def _(bot: Bot, event: GroupMessageEvent):
     message = f"[CQ:at,qq={event.sender.user_id}]\n{config.about_template}"

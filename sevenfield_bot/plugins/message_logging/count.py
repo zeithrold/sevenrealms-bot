@@ -4,6 +4,7 @@ from nonebot.adapters.onebot.v11 import Bot, GroupMessageEvent
 
 matcher = on_command("count")
 
+
 @matcher.handle()
 async def _(bot: Bot, event: GroupMessageEvent):
     require("seventield_bot.plugins.db")

@@ -1,8 +1,10 @@
+from . import count
 from nonebot import require, on
 from nonebot.rule import Rule
 from nonebot.adapters.onebot.v11 import GroupMessageEvent
 import uuid
 from .config import config
+
 
 async def message_checker(event: GroupMessageEvent):
     return str(event.group_id) in config.qq_logging_group
@@ -10,6 +12,7 @@ async def message_checker(event: GroupMessageEvent):
 rule = Rule(message_checker)
 
 matcher = on(rule=rule)
+
 
 @matcher.handle()
 async def _(event: GroupMessageEvent):
@@ -30,5 +33,3 @@ async def _(event: GroupMessageEvent):
             anonymous=event.anonymous is not None
         )
         orm.commit()
-
-from . import count

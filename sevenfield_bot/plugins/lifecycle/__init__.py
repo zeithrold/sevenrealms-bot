@@ -5,6 +5,7 @@ import time
 
 driver = get_driver()
 
+
 @driver.on_startup
 def handler():
     require("sevenfield_bot.plugins.db")
@@ -14,6 +15,7 @@ def handler():
         Lifecycle(time=int(time.time()), type="startup")
         orm.commit()
 
+
 @driver.on_shutdown
 def handler():
     require("sevenfield_bot.plugins.db")
@@ -22,6 +24,7 @@ def handler():
     with orm.db_session:
         Lifecycle(time=int(time.time()), type="shutdown")
         orm.commit()
+
 
 @driver.on_bot_connect
 def handler(bot: Bot):
@@ -34,7 +37,8 @@ def handler(bot: Bot):
         with orm.db_session:
             Lifecycle(time=int(time.time()), type="bot_connect")
             orm.commit()
-        bot.send_group_msg(group_id=int(global_config.qq_main_group), message=f"[CQ:at,qq={list(driver.config.superusers)[0]}]您的机器人已连接。")
+        bot.send_group_msg(group_id=int(global_config.qq_main_group),
+                           message=f"[CQ:at,qq={list(driver.config.superusers)[0]}]您的机器人已连接。")
 
 
 @driver.on_bot_disconnect
@@ -48,4 +52,5 @@ def handler(bot: Bot):
         with orm.db_session:
             Lifecycle(time=int(time.time()), type="bot_connect")
             orm.commit()
-        bot.send_group_msg(group_id=int(global_config.qq_main_group), message=f"[CQ:at,qq={list(driver.config.superusers)[0]}]您的机器人已断开。")
+        bot.send_group_msg(group_id=int(global_config.qq_main_group),
+                           message=f"[CQ:at,qq={list(driver.config.superusers)[0]}]您的机器人已断开。")

@@ -3,6 +3,7 @@ from pony import orm
 
 db = orm.Database()
 
+
 class Message(db.Entity):
     onebot_id = orm.Required(int, size=64)
     uuid = orm.Required(str, max_len=36)
@@ -15,9 +16,11 @@ class Message(db.Entity):
     raw_message = orm.Optional(str, max_len=1024)
     anonymous = orm.Required(bool)
 
+
 class Lifecycle(db.Entity):
     time = orm.Required(float)
     type = orm.Required(str, 16)
+
 
 db.bind(provider='mysql',
         host=config.mysql_host,
@@ -26,5 +29,5 @@ db.bind(provider='mysql',
         passwd=config.mysql_password,
         db=config.mysql_database,
         charset='utf8mb4'
-)
+        )
 db.generate_mapping(create_tables=True)
