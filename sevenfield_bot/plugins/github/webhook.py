@@ -7,6 +7,7 @@ driver = get_driver()
 config = driver.config
 superuser = list(config.superusers)[0]
 
+
 @matcher.handle()
 async def _(event: PushEvent):
     require("sevenfield_bot.plugins.global_config")
@@ -20,13 +21,13 @@ async def _(event: PushEvent):
         c.tree_id[:8]: c.message
         for c in event.payload.commits
     }
-    commit_str = "\n".join("  {sha}: {message}".format(sha=sha, message=message) for sha, message in commits.items())
-    message = f"""[CQ:at,qq={superuser}]
-    [GitHub]
-    您的项目zeithrold/sevenfield-bot已经提交{last_commit_sha}等共{commit_counts}个Git Commit。
-    具体Commit列表如下:
-    {commit_str}
-    """
+    commit_str = "\n".join("  {sha}: {message}".format(
+        sha=sha, message=message) for sha, message in commits.items())
+    message = (f"[CQ:at,qq={superuser}]"
+               "[GitHub]"
+               f"您的项目zeithrold/sevenfield-bot已经提交{last_commit_sha}等共{commit_counts}个Git Commit。"
+               "具体Commit列表如下:"
+               f"{commit_str}")
     await bot.send_group_msg(group_id=main_group, message=message)
 
 
