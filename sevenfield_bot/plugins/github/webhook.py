@@ -23,10 +23,10 @@ async def _(event: PushEvent):
     }
     commit_str = "\n".join("  {sha}: {message}".format(
         sha=sha, message=message) for sha, message in commits.items())
-    message = (f"[CQ:at,qq={superuser}]"
-               "[GitHub]"
-               f"您的项目zeithrold/sevenfield-bot已经提交{last_commit_sha}等共{commit_counts}个Git Commit。"
-               "具体Commit列表如下:"
+    message = (f"[CQ:at,qq={superuser}]\n"
+               "[GitHub]\n"
+               f"您的项目zeithrold/sevenfield-bot已经提交{last_commit_sha}等共{commit_counts}个Git Commit。\n"
+               "具体Commit列表如下:\n"
                f"{commit_str}")
     await bot.send_group_msg(group_id=main_group, message=message)
 
