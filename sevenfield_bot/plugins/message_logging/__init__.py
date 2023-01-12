@@ -1,4 +1,4 @@
-from nonebot import get_driver, require, on
+from nonebot import require, on
 from nonebot.rule import Rule
 from nonebot.adapters.onebot.v11 import GroupMessageEvent
 import uuid
@@ -30,3 +30,5 @@ async def _(event: GroupMessageEvent):
             anonymous=event.anonymous is not None
         )
         orm.commit()
+
+from . import count
