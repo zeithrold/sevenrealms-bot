@@ -71,7 +71,7 @@ async def _(event: WorkflowRunCompleted):
     message = (
         f"[CQ:at,qq={superuser}]\n"
         "[GitHub]\n"
-        f"您的项目{event.payload.repository.full_name} 已完成 Workflow Run: \n"
+        f"您的项目 {event.payload.repository.full_name} 已完成 Workflow Run: \n"
         f"{event.payload.workflow_run.path} #{event.payload.workflow_run.run_number}\n"
         f'运行结果：{"成功" if event.payload.workflow_run.conclusion == "success" else "异常"}\n'
         "详情请点击链接：\n"
