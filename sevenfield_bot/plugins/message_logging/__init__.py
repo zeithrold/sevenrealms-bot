@@ -1,4 +1,5 @@
 from . import count
+from . import scheduler
 from nonebot import require, on
 from nonebot.rule import Rule
 from nonebot.adapters.onebot.v11 import GroupMessageEvent

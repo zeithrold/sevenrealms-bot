@@ -18,9 +18,10 @@ nonebot-adapter-github = "^0.2.5"
 nonebot-plugin-status = "^0.6.0"
 fastapi = "^0.89.1"
 websockets = "^10.4"
+nonebot-plugin-apscheduler = "^0.2.0"
 
 [tool.nonebot]
-plugins = ["nonebot_plugin_status"]
+plugins = ["nonebot_plugin_status", "nonebot_plugin_apscheduler"]
 plugin_dirs = ["sevenfield_bot/plugins"]
 
 [tool.poetry.group.dev.dependencies]
