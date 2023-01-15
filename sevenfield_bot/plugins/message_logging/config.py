@@ -1,10 +1,10 @@
 from nonebot import get_driver
 from pydantic import BaseModel, Extra
-from typing import List
+from typing import Set
 
 
 class Config(BaseModel, extra=Extra.ignore):
-    qq_logging_group: List[str] = []
+    qq_logging_group: Set[str] = []
 
 
 _driver = get_driver()

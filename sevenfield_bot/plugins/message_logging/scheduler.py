@@ -16,7 +16,7 @@ async def _():
     from sevenfield_bot.plugins.global_config import global_config
     bot: Bot = get_bot(global_config.qq_self_id)
     counts = get_count()
-    groups = config.qq_logging_group
+    groups = list(config.qq_logging_group)
     message = (f"当前时间为：0:00。"
                "\n"
                f"目前，小小Z已经收集了共{counts}条消息。"
@@ -27,5 +27,6 @@ async def _():
     # await bot.send_group_msg(group_id=int(global_config.qq_main_group), message=message)
     task_list = []
     for group in groups:
-        task_list.append(bot.send_group_msg(group_id=int(group), message=message))
-    await asyncio.gather(task_list)
+        task_list.append(bot.send_group_msg(
+            group_id=int(group), message=message))
+    await asyncio.gather(*task_list)
