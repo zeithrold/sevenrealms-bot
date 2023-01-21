@@ -61,7 +61,7 @@ jobs:
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
         with:
           registry: swr.cn-north-4.myhuaweicloud.com
-          username: cn-north-4@${{ secrets.HUAWEI_REGISTRY_USERNAME }}
+          username: ${{ secrets.HUAWEI_REGISTRY_USERNAME }}
           password: ${{ secrets.HUAWEI_REGISTRY_PASSWORD }}
 
       # Extract metadata (tags, labels) for Docker
