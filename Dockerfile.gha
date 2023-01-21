@@ -8,13 +8,11 @@ ENV PORT=8080
 
 RUN apt-get update
 
-RUN apt-get install -y python3.9 python3.9-venv
+RUN apt-get install -y python3.9
 
 COPY requirements.txt /app/requirements.txt
 
-RUN python3.9 -m venv venv
-
-RUN source venv/bin/activate
+RUN python3.9 -m ensurepip --upgrade
 
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
