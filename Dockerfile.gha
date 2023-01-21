@@ -12,11 +12,13 @@ COPY requirements.txt /app/requirements.txt
 
 RUN pip install -Ur requirements.txt
 
-FROM mcr.microsoft.com/playwright:v1.29.0-focal
+FROM mcr.microsoft.com/playwright:v1.29.1-focal
 
 WORKDIR /app
 
 ENV PORT=8080
+
+RUN apt-get update
 
 RUN apt-get install -y python3.9
 
@@ -26,7 +28,7 @@ COPY --from=dependencies /opt/venv /opt/venv
 
 ENV PATH="/opt/venv/bin:$PATH"
 
-RUN playwright install --with-deps
+RUN playwright install
 
 COPY ./ /app/
 
