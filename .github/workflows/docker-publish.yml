@@ -49,15 +49,15 @@ jobs:
       - name: Setup Docker buildx
         uses: docker/setup-buildx-action@79abd3f86f79a9d68a23c75a09a9a85889262adf
 
-      # # Login against a Docker registry except on PR
-      # # https://github.com/docker/login-action
-      # - name: Log into registry swr.cn-north-4.myhuaweicloud.com
-      #   if: ${{ github.event_name != 'pull_request' }}
-      #   uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
-      #   with:
-      #     registry: swr.cn-north-4.myhuaweicloud.com
-      #     username: ${{ secrets.HUAWEI_REGISTRY_USERNAME }}
-      #     password: ${{ secrets.HUAWEI_REGISTRY_PASSWORD }}
+      # Login against a Docker registry except on PR
+      # https://github.com/docker/login-action
+      - name: Log into registry swr.cn-north-4.myhuaweicloud.com
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+        with:
+          registry: swr.cn-north-4.myhuaweicloud.com
+          username: ${{ secrets.HUAWEI_REGISTRY_USERNAME }}
+          password: ${{ secrets.HUAWEI_REGISTRY_PASSWORD }}
       
       - name: Log into registry ghcr.io
         if: ${{ github.event_name != 'pull_request' }}
@@ -73,16 +73,9 @@ jobs:
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
-            type=sha,format=long
           images: |
             ghcr.io/${{ env.IMAGE_NAME }}
-#             swr.cn-north-4.myhuaweicloud.com/${{ env.IMAGE_NAME }}
+            swr.cn-north-4.myhuaweicloud.com/${{ env.IMAGE_NAME }}
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
