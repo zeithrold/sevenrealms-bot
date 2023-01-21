@@ -1078,7 +1078,7 @@ websockets = ["websockets (>=10.0,<11.0)"]
 [[package]]
 name = "OpenAIAuth"
 version = "0.0.6"
-description = ""
+description = "OpenAI Authentication Reverse Engineered"
 category = "main"
 optional = false
 python-versions = "*"
@@ -1091,7 +1091,7 @@ tls-client = "*"
 [package.source]
 type = "git"
 url = "https://github.com/acheong08/OpenAIAuth.git"
-reference = "HEAD"
+reference = "66db9f9c8df7457195fb555c7dc1aded8963d5bc"
 resolved_reference = "66db9f9c8df7457195fb555c7dc1aded8963d5bc"
 
 [[package]]
@@ -2050,4 +2050,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "0bb1b037bdba91510c7465e194abe82112c42f6edc9f9fb8545c1d3d41977e4d"
+content-hash = "bab11705ce3beb357ae5712ddb2ffbcdaa8f4d2fa41c3e9410b5eb214946137f"
