@@ -81,8 +81,9 @@ jobs:
             type=semver,pattern={{major}}
             type=sha,format=long
           images: |
-            ghcr.io/${{ env.IMAGE_NAME }}
             swr.cn-north-4.myhuaweicloud.com/${{ env.IMAGE_NAME }}
+            ghcr.io/${{ env.IMAGE_NAME }}
+#             swr.cn-north-4.myhuaweicloud.com/${{ env.IMAGE_NAME }}
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
