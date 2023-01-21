@@ -1,0 +1,21 @@
+FROM mcr.microsoft.com/playwright:v1.29.0-focal
+
+WORKDIR /app
+
+ENV PORT=8080
+
+RUN apt-get update
+
+RUN apt-get install python3.9
+
+COPY requirements.txt /app/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
+
+RUN rm requirements.txt
+
+RUN playwright install --with-deps
+
+COPY ./ /app/
+
+CMD uvicorn --workers 1 --env-file .env.prod --port 8080 --host 0.0.0.0 bot:app
