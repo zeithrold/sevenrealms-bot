@@ -5,26 +5,45 @@ WORKDIR /tmp
 COPY ./pyproject.toml ./poetry.lock* /tmp/
 
 RUN curl -sSL https://install.python-poetry.org -o install-poetry.py
-
 RUN python install-poetry.py --yes
 
 ENV PATH="${PATH}:/root/.local/bin"
 
 RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
 
-FROM python:3.9
+FROM ubuntu:focal as venv
 
 WORKDIR /app
 
-ENV PORT=8080
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update
+RUN apt-get install -y python3.9 python3.9-venv python3.9-dev git build-essential
+
+WORKDIR /app/
+
+RUN python3.9 -m venv venv
+
+ENV PATH="/app/venv/bin:${PATH}"
 
 COPY --from=requirements /tmp/requirements.txt /app/requirements.txt
 
-RUN pip install --no-cache-dir --upgrade -r requirements.txt
+RUN pip install -Ur requirements.txt
 
-RUN rm requirements.txt
+FROM mcr.microsoft.com/playwright:v1.29.1-focal
 
-RUN playwright install --with-deps
+WORKDIR /app/
+
+RUN apt-get update
+RUN apt-get install -y python3.9 python3.9-venv
+
+COPY --from=venv /app /app
+
+ENV PORT=8080
+ENV PATH="/app/venv/bin:${PATH}"
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+
+RUN playwright install
 
 COPY ./ /app/
 

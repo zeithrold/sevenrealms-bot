@@ -83,18 +83,6 @@ jobs:
           images: |
             ghcr.io/${{ env.IMAGE_NAME }}
             swr.cn-north-4.myhuaweicloud.com/${{ env.IMAGE_NAME }}
-      
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-
-      - name: Set up Poetry
-        uses: Gr1N/setup-poetry@v8
-
-      - name: Get requirements.txt
-        run: |
-          poetry export -f requirements.txt --output requirements.txt --without-hashes
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
@@ -109,4 +97,3 @@ jobs:
           cache-from: type=gha
           platforms: linux/arm64,linux/amd64
           cache-to: type=gha,mode=max
-          file: Dockerfile.gha
