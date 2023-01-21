@@ -1084,10 +1084,8 @@ description = "NoneBot2 plugin for AI chat"
 category = "main"
 optional = false
 python-versions = ">=3.8"
-files = [
-    {file = "nonebot-plugin-chatgpt-0.7.3.tar.gz", hash = "sha256:c42c8949d9c09c74927fd44b29f067a8ef2c3f427ba021b18b19e2ff4a505cd2"},
-    {file = "nonebot_plugin_chatgpt-0.7.3-py3-none-any.whl", hash = "sha256:6518c72d3e06e851c44cf4e87f43c4b1d5e2fb04bec6c2d9007bd7d709cc3c7f"},
-]
+files = []
+develop = false
 
 [package.dependencies]
 nonebot-adapter-onebot = ">=2.1.5"
@@ -1095,6 +1093,12 @@ nonebot-plugin-apscheduler = ">=0.2.0"
 nonebot-plugin-htmlrender = ">=0.2.0.1"
 nonebot2 = ">=2.0.0rc2"
 OpenAIAuth = ">=0.0.3.1"
+
+[package.source]
+type = "git"
+url = "https://github.com/zeithrold/nonebot-plugin-chatgpt.git"
+reference = "master"
+resolved_reference = "54b36c2d30028a0f5b1e0bb290e914de988857ca"
 
 [[package]]
 name = "nonebot-plugin-htmlrender"
@@ -2143,4 +2147,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "bab11705ce3beb357ae5712ddb2ffbcdaa8f4d2fa41c3e9410b5eb214946137f"
+content-hash = "19233dae1ccc294b0ca2bd40540bb5914ecb746aff72b1f187aefaf11778a969"
