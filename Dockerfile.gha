@@ -1,22 +1,30 @@
-FROM mcr.microsoft.com/playwright:v1.29.0-focal
+FROM python:3.9-slim as dependencies
 
-SHELL ["/bin/bash", "-c"]
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /app/
+
+RUN python -m venv /opt/venv
+
+ENV PATH="/opt/venv/bin:$PATH"
+
+COPY requirements.txt /app/requirements.txt
+
+RUN pip install -Ur requirements.txt
+
+FROM mcr.microsoft.com/playwright:v1.29.0-focal
 
 WORKDIR /app
 
 ENV PORT=8080
 
-RUN apt-get update
-
 RUN apt-get install -y python3.9
 
-COPY requirements.txt /app/requirements.txt
+WORKDIR /app/
 
-RUN python3.9 -m ensurepip --upgrade
+COPY --from=dependencies /opt/venv /opt/venv
 
-RUN pip install --no-cache-dir --upgrade -r requirements.txt
-
-RUN rm requirements.txt
+ENV PATH="/opt/venv/bin:$PATH"
 
 RUN playwright install --with-deps
 
