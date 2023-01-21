@@ -109,4 +109,4 @@ jobs:
           cache-from: type=gha
           platforms: linux/arm64,linux/amd64
           cache-to: type=gha,mode=max
-          file: Dockerfile-gha
+          file: Dockerfile.gha
