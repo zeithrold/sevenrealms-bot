@@ -19,9 +19,11 @@ nonebot-plugin-status = "^0.6.0"
 fastapi = "^0.89.1"
 websockets = "^10.4"
 nonebot-plugin-apscheduler = "^0.2.0"
+openaiauth = {git = "https://github.com/acheong08/OpenAIAuth.git"}
+nonebot-plugin-chatgpt = "^0.7.3"
 
 [tool.nonebot]
-plugins = ["nonebot_plugin_status", "nonebot_plugin_apscheduler"]
+plugins = ["nonebot_plugin_status", "nonebot_plugin_apscheduler", "nonebot_plugin_chatgpt"]
 plugin_dirs = ["sevenfield_bot/plugins"]
 
 [tool.poetry.group.dev.dependencies]

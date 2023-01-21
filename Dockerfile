@@ -24,6 +24,8 @@ RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 RUN rm requirements.txt
 
+RUN playwright install
+
 COPY ./ /app/
 
 CMD uvicorn --workers 1 --env-file .env.prod --port 8080 --host 0.0.0.0 bot:app
