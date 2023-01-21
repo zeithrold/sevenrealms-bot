@@ -49,13 +49,23 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
 
-      - name: Log into registry swr.cn-north-4.myhuaweicloud.com
+#       - name: Log into registry swr.cn-north-4.myhuaweicloud.com
+#         if: ${{ github.event_name != 'pull_request' }}
+#         uses: docker/login-action@v2
+#         with:
+#           registry: swr.cn-north-4.myhuaweicloud.com
+#           username: ${{ secrets.HUAWEI_REGISTRY_USERNAME }}
+#           password: ${{ secrets.HUAWEI_REGISTRY_PASSWORD }}
+
+
+      - name: Log into registry registry.cn-beijing.aliyuncs.com
         if: ${{ github.event_name != 'pull_request' }}
         uses: docker/login-action@v2
         with:
-          registry: swr.cn-north-4.myhuaweicloud.com
-          username: ${{ secrets.HUAWEI_REGISTRY_USERNAME }}
-          password: ${{ secrets.HUAWEI_REGISTRY_PASSWORD }}
+          registry: registry.cn-beijing.aliyuncs.com
+          username: ${{ secrets.ALIYUN_REGISTRY_USERNAME }}
+          password: ${{ secrets.ALIYUN_REGISTRY_PASSWORD }}
+
 
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
@@ -65,7 +75,7 @@ jobs:
         with:
           images: |
             ghcr.io/${{ env.IMAGE_NAME }}
-            swr.cn-north-4.myhuaweicloud.com/${{ env.IMAGE_NAME }}
+            registry.cn-beijing.aliyuncs.com/${{ env.IMAGE_NAME }}
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
