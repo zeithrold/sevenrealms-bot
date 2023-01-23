@@ -20,7 +20,7 @@ fastapi = "^0.89.1"
 websockets = "^10.4"
 nonebot-plugin-apscheduler = "^0.2.0"
 openaiauth = {git = "https://github.com/acheong08/OpenAIAuth.git", rev = "66db9f9c8df7457195fb555c7dc1aded8963d5bc"}
-nonebot-plugin-chatgpt = {git = "https://github.com/zeithrold/nonebot-plugin-chatgpt.git", rev = "master"}
+nonebot-plugin-chatgpt = {git = "https://github.com/zeithrold/nonebot-plugin-chatgpt", rev = "729c86b6c8f50491bb5edca9fd0539fceec40be2"}
 
 [tool.nonebot]
 plugins = ["nonebot_plugin_status", "nonebot_plugin_apscheduler", "nonebot_plugin_chatgpt"]

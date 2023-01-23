@@ -1096,8 +1096,8 @@ OpenAIAuth = ">=0.0.3.1"
 
 [package.source]
 type = "git"
-url = "https://github.com/zeithrold/nonebot-plugin-chatgpt.git"
-reference = "master"
+url = "https://github.com/zeithrold/nonebot-plugin-chatgpt"
+reference = "729c86b6c8f50491bb5edca9fd0539fceec40be2"
 resolved_reference = "729c86b6c8f50491bb5edca9fd0539fceec40be2"
 
 [[package]]
@@ -2147,4 +2147,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "19233dae1ccc294b0ca2bd40540bb5914ecb746aff72b1f187aefaf11778a969"
+content-hash = "7f1b30a64619d8749fce86384395627e338a9df11ed33a5da423d323115c41d0"
