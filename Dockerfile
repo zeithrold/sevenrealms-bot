@@ -43,8 +43,6 @@ ENV PORT=8080
 ENV PATH="/app/venv/bin:${PATH}"
 ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 
-RUN playwright install
-
 COPY ./ /app/
 
 CMD uvicorn --workers 1 --env-file .env.prod --port 8080 --host 0.0.0.0 bot:app
