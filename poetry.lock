@@ -1098,7 +1098,7 @@ OpenAIAuth = ">=0.0.3.1"
 type = "git"
 url = "https://github.com/zeithrold/nonebot-plugin-chatgpt.git"
 reference = "master"
-resolved_reference = "21ace0d14d682d41d3db2fa70b7355a00dab3ff2"
+resolved_reference = "729c86b6c8f50491bb5edca9fd0539fceec40be2"
 
 [[package]]
 name = "nonebot-plugin-htmlrender"
