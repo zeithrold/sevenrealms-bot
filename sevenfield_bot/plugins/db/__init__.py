@@ -39,6 +39,15 @@ class Blacklist(db.Entity):
     operator_id = orm.Required(int, size=64)
 
 
+class MessageEmotion(db.Entity):
+    uuid = orm.Required(str, max_len=36)
+    message_uuid = orm.Required(str, max_len=36)
+    positive_prob = orm.Required(float)
+    neutral_prob = orm.Required(float)
+    negative_prob = orm.Required(float)
+    result = orm.Required(str, max_len=10)
+
+
 db.bind(provider='mysql',
         host=config.mysql_host,
         port=config.mysql_port,

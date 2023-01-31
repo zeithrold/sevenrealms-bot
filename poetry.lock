@@ -13,6 +13,35 @@ files = [
 ]
 
 [[package]]
+name = "aliyun-python-sdk-alinlp"
+version = "1.0.16"
+description = "The alinlp module of Aliyun Python sdk."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "aliyun-python-sdk-alinlp-1.0.16.tar.gz", hash = "sha256:6b0508b55f75762e3c83727a1f94330efaa6b13d664d30d5e836791ca8214e21"},
+]
+
+[package.dependencies]
+aliyun-python-sdk-core = ">=2.11.5"
+
+[[package]]
+name = "aliyun-python-sdk-core"
+version = "2.13.36"
+description = "The core module of Aliyun Python SDK."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "aliyun-python-sdk-core-2.13.36.tar.gz", hash = "sha256:20bd54984fa316da700c7f355a51ab0b816690e2a0fcefb7b5ef013fed0da928"},
+]
+
+[package.dependencies]
+cryptography = ">=2.6.0"
+jmespath = ">=0.9.3,<1.0.0"
+
+[[package]]
 name = "anyio"
 version = "3.6.2"
 description = "High level compatibility layer for multiple asynchronous event loop implementations"
@@ -758,6 +787,18 @@ files = [
 [package.dependencies]
 arrow = "*"
 jinja2 = "*"
+
+[[package]]
+name = "jmespath"
+version = "0.10.0"
+description = "JSON Matching Expressions"
+category = "main"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+files = [
+    {file = "jmespath-0.10.0-py2.py3-none-any.whl", hash = "sha256:cdf6525904cc597730141d61b36f2e4b8ecc257c420fa2f4549bac2c2d0cb72f"},
+    {file = "jmespath-0.10.0.tar.gz", hash = "sha256:b85d0567b8666149a93172712e68920734333c0ce7e89b78b3e987f71e5ed4f9"},
+]
 
 [[package]]
 name = "loguru"
@@ -2147,4 +2188,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "7f1b30a64619d8749fce86384395627e338a9df11ed33a5da423d323115c41d0"
+content-hash = "bc88471c55cf1cfb23152b439723f489e4f206ef541b1e7ccc241b44c33b93d6"
