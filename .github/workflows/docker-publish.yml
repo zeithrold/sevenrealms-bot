@@ -89,7 +89,10 @@ jobs:
         with:
           python-version: '3.10' 
 
-      - name: Export requirements.txt with poetry
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Export requirements.txt with Poetry
         run: poetry export -f requirements.txt --output requirements.txt --without-hashes
 
       # Build and push Docker image with Buildx (don't push on PR)
