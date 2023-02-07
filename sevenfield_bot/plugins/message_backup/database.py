@@ -31,11 +31,12 @@ def generate_dataset():
 
     df = pd.DataFrame(df_array)
     df.set_index("id", drop=True, inplace=True)
-    data_file_name = "data.csv"
+    data_file_name = "data.xlsx"
     data_full_path = f"{data_dir}/{data_file_name}"
-    df.to_csv(data_full_path)
+    df.to_excel(data_full_path)
     archive_file_name = f"data_{year}{month}{day}.7z"
     archive_full_path = f"{temp_dir}/{archive_file_name}"
     with py7zr.SevenZipFile(archive_full_path, "w", password=config.alioss_encrypt_password) as f:
         f.write(data_full_path, arcname=data_file_name)
+    os.remove(data_full_path)
     return archive_full_path, archive_file_name

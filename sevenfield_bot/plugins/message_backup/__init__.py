@@ -2,6 +2,7 @@ from apscheduler.triggers.cron import CronTrigger
 from nonebot import require
 from pytz import timezone
 from nonebot_plugin_apscheduler import scheduler
+import os
 from .database import generate_dataset
 from .alioss import bucket
 from nonebot import require, get_bot, get_driver
@@ -28,7 +29,8 @@ async def _():
         full_path, file_name = generate_dataset()
         alioss_file_path = f'message_data/{file_name}'
         bucket.put_object_from_file(alioss_file_path, full_path)
-        bucket.put_symlink(alioss_file_path, "latest.7z")
+        bucket.put_symlink(alioss_file_path, "message_data/latest.7z")
+        os.remove(full_path)
         await bot.send_group_msg(group_id=group_id, message=f'[CQ:at,qq={superuser}][备份]文件 "{file_name}" 上传成功。')
     except Exception as e:
         logger.warning("文件备份出现了问题，错误信息如下：")
