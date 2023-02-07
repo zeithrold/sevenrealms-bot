@@ -4,6 +4,7 @@ import tempfile
 import os
 import os.path
 import py7zr
+import csv
 import time
 import uuid
 from pony import orm
@@ -33,7 +34,7 @@ def generate_dataset():
     df.set_index("id", drop=True, inplace=True)
     data_file_name = "data.csv"
     data_full_path = f"{data_dir}/{data_file_name}"
-    df.to_csv(data_full_path)
+    df.to_csv(data_full_path, quoting=csv.QUOTE_ALL)
     archive_file_name = f"data_{year}{month}{day}.7z"
     archive_full_path = f"{temp_dir}/{archive_file_name}"
     with py7zr.SevenZipFile(archive_full_path, "w", password=config.alioss_encrypt_password) as f:
