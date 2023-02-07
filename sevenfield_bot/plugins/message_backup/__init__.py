@@ -5,7 +5,7 @@ from nonebot_plugin_apscheduler import scheduler
 import os
 from .database import generate_dataset
 from .alioss import bucket
-from nonebot import require, get_bot, get_driver, on_command
+from nonebot import require, get_bot, get_driver
 from nonebot.adapters.onebot.v11 import Bot
 from nonebot.log import logger
 
@@ -14,7 +14,9 @@ require("nonebot_plugin_apscheduler")
 driver = get_driver()
 driver_config = driver.config
 
-async def backup():
+
+@scheduler.scheduled_job(CronTrigger(minute="*/1", timezone=timezone("Asia/Shanghai")))
+async def _():
     require("sevenfield_bot.plugins.global_config")
 
     from sevenfield_bot.plugins.global_config import global_config
@@ -35,11 +37,3 @@ async def backup():
         logger.warning(e)
         await bot.send_group_msg(group_id=group_id, message=f"[CQ:at,qq={superuser}][备份]文件上传失败，请查看控制台。")
         return
-
-@scheduler.scheduled_job(CronTrigger(hour=0, timezone=timezone("Asia/Shanghai")))
-async def _():
-    await backup()
-
-@on_command("backup")
-async def _():
-    await backup()
