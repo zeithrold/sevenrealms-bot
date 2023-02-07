@@ -15,7 +15,7 @@ driver = get_driver()
 driver_config = driver.config
 
 
-@scheduler.scheduled_job(CronTrigger(minute="*/1", timezone=timezone("Asia/Shanghai")))
+@scheduler.scheduled_job(CronTrigger(hour=0, timezone=timezone("Asia/Shanghai")))
 async def _():
     require("sevenfield_bot.plugins.global_config")
 
