@@ -13,7 +13,7 @@ async def message_checker(event: GroupMessageEvent):
 
 rule = Rule(message_checker)
 
-matcher = on(rule=rule, priority=1)
+matcher = on(rule=rule, priority=900)
 
 
 @matcher.handle()
