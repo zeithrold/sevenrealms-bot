@@ -6,7 +6,7 @@ RUN python -m venv venv
 
 ENV PATH="/app/venv/bin:${PATH}"
 
-ADD ./requirements.txt /app/requirements.txt
+ADD requirements.txt /app/requirements.txt
 
 RUN pip install -Ur requirements.txt
 
