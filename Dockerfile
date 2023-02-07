@@ -16,6 +16,7 @@ WORKDIR /app/
 
 COPY --from=venv /app /app
 
+ENV TZ=Asia/Shanghai
 ENV PORT=8080
 ENV PATH="/app/venv/bin:${PATH}"
 

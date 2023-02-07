@@ -11,7 +11,7 @@ from .config import config
 require("nonebot_plugin_apscheduler")
 
 
-@scheduler.scheduled_job(CronTrigger(hour=0, timezone=timezone("Asia/Shanghai")))
+@scheduler.scheduled_job(CronTrigger(hour=0))
 async def _():
     require("sevenfield_bot.plugins.global_config")
     from sevenfield_bot.plugins.global_config import global_config
