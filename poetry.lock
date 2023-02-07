@@ -1289,25 +1289,6 @@ files = [
 ]
 
 [[package]]
-name = "OpenAIAuth"
-version = "0.0.6"
-description = "OpenAI Authentication Reverse Engineered"
-category = "main"
-optional = false
-python-versions = "*"
-files = []
-develop = false
-
-[package.dependencies]
-tls-client = "*"
-
-[package.source]
-type = "git"
-url = "https://github.com/acheong08/OpenAIAuth.git"
-reference = "66db9f9c8df7457195fb555c7dc1aded8963d5bc"
-resolved_reference = "66db9f9c8df7457195fb555c7dc1aded8963d5bc"
-
-[[package]]
 name = "oss2"
 version = "2.16.0"
 description = "Aliyun OSS (Object Storage Service) SDK"
@@ -2219,18 +2200,6 @@ files = [
 ]
 
 [[package]]
-name = "tls-client"
-version = "0.1.8"
-description = "Advanced Python HTTP Client."
-category = "main"
-optional = false
-python-versions = "*"
-files = [
-    {file = "tls_client-0.1.8-py3-none-any.whl", hash = "sha256:3c0022997b2ca4e9d7907ac2a2265dae65961f497cc69702784a15f736178311"},
-    {file = "tls_client-0.1.8.tar.gz", hash = "sha256:38b2ead2a04dd0c88ac9ce9a47dd72f48a4b03d9180804c389cba887e91494ef"},
-]
-
-[[package]]
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
@@ -2531,4 +2500,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "b773f61ef72c1ef27d8992d1684ee3cc298971c21bdf518813a2acd68d29724c"
+content-hash = "637872a256417dfc12390d0bc03e9ce24a1f01d61c2188ddc91b2038bab74dae"
