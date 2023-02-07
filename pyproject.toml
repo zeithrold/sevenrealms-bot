@@ -23,7 +23,6 @@ aliyun-python-sdk-alinlp = "^1.0.16"
 oss2 = "^2.16.0"
 pandas = "^1.5.3"
 py7zr = "^0.20.2"
-openpyxl = "^3.1.0"
 
 [tool.nonebot]
 # plugins = ["nonebot_plugin_status", "nonebot_plugin_apscheduler"]
