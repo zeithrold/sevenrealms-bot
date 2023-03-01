@@ -25,7 +25,7 @@ async def _():
                "\n"
                "若不愿意被收集聊天记录，请输入命令 /blacklist 以查询黑名单功能。\n"
                "另外，技术部仍在招新中哦！"
-               "是时候该睡觉了，小小Z祝各位有个好梦，晚安🌟" if current_time.tm_hout == 0 else ""
+               "是时候该睡觉了，小小Z祝各位有个好梦，晚安🌟" if current_time.tm_hour == 0 else ""
                )
     # await bot.send_group_msg(group_id=int(global_config.qq_main_group), message=message)
     task_list = []
