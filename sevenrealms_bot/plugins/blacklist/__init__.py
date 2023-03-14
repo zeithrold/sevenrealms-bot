@@ -16,8 +16,8 @@ matcher = on_command("blacklist", rule=rule)
 
 def get_blacklist_status(operator_id: int) -> bool:
     current_status = False
-    require("sevenfield_bot.plugins.db")
-    from sevenfield_bot.plugins.db import Blacklist
+    require("sevenrealms_bot.plugins.db")
+    from sevenrealms_bot.plugins.db import Blacklist
     from pony import orm
     with orm.db_session:
         counts = orm.select(
@@ -68,8 +68,8 @@ async def _(bot: Bot, param: BlacklistParam = Depends(depend)):
         await bot.send_group_msg(group_id=param.group_id, message=message)
     else:
         toggled_status = not param.current_status
-        require("sevenfield_bot.plugins.db")
-        from sevenfield_bot.plugins.db import Blacklist
+        require("sevenrealms_bot.plugins.db")
+        from sevenrealms_bot.plugins.db import Blacklist
         from pony import orm
         with orm.db_session:
             Blacklist(

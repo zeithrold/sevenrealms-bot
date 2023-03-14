@@ -18,10 +18,10 @@ matcher = on(rule=rule, priority=900)
 
 @matcher.handle()
 async def _(event: GroupMessageEvent):
-    require("sevenfield_bot.plugins.db")
-    require("sevenfield_bot.plugins.blacklist")
-    from sevenfield_bot.plugins.blacklist import get_blacklist_status
-    from sevenfield_bot.plugins.db import Message
+    require("sevenrealms_bot.plugins.db")
+    require("sevenrealms_bot.plugins.blacklist")
+    from sevenrealms_bot.plugins.blacklist import get_blacklist_status
+    from sevenrealms_bot.plugins.db import Message
     from pony import orm
     with orm.db_session:
         blacklist_status = get_blacklist_status(event.sender.user_id)

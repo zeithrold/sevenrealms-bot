@@ -21,8 +21,8 @@ def generate_dataset():
     month = "%02d" % current_time_struct.tm_mon
     day = "%02d" % current_time_struct.tm_mday
     time_limit = int(time.mktime(time.strptime(f"{current_time_struct.tm_year} {current_time_struct.tm_mon} {current_time_struct.tm_mday}", "%Y %m %d")))
-    require("sevenfield_bot.plugins.db")
-    from sevenfield_bot.plugins.db import Message, Recall
+    require("sevenrealms_bot.plugins.db")
+    from sevenrealms_bot.plugins.db import Message, Recall
     with orm.db_session:
         result = Message.select(lambda m: (not (m.blacklisted or m.anonymous or orm.exists(
             recall for recall in Recall if recall.recalled_onebot_id == m.onebot_id))) and m.time <= time_limit)

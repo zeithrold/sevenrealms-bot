@@ -10,8 +10,8 @@ superuser = list(config.superusers)[0]
 
 @matcher.handle()
 async def _(event: PushEvent):
-    require("sevenfield_bot.plugins.global_config")
-    from sevenfield_bot.plugins.global_config import global_config
+    require("sevenrealms_bot.plugins.global_config")
+    from sevenrealms_bot.plugins.global_config import global_config
     last_commit_sha = event.payload.head_commit.id[:8]
     commit_counts = len(event.payload.commits)
     main_group = int(global_config.qq_main_group)
@@ -33,8 +33,8 @@ async def _(event: PushEvent):
 
 @matcher.handle()
 async def _(event: PingEvent):
-    require("sevenfield_bot.plugins.global_config")
-    from sevenfield_bot.plugins.global_config import global_config
+    require("sevenrealms_bot.plugins.global_config")
+    from sevenrealms_bot.plugins.global_config import global_config
     main_group = int(global_config.qq_main_group)
     self_id = global_config.qq_self_id
     bot: Bot = get_bot(self_id)
@@ -43,8 +43,8 @@ async def _(event: PingEvent):
 
 @matcher.handle()
 async def _(event: WorkflowRunRequested):
-    require("sevenfield_bot.plugins.global_config")
-    from sevenfield_bot.plugins.global_config import global_config
+    require("sevenrealms_bot.plugins.global_config")
+    from sevenrealms_bot.plugins.global_config import global_config
     main_group = int(global_config.qq_main_group)
     self_id = global_config.qq_self_id
     event.payload.workflow_run.name
@@ -62,8 +62,8 @@ async def _(event: WorkflowRunRequested):
 
 @matcher.handle()
 async def _(event: WorkflowRunCompleted):
-    require("sevenfield_bot.plugins.global_config")
-    from sevenfield_bot.plugins.global_config import global_config
+    require("sevenrealms_bot.plugins.global_config")
+    from sevenrealms_bot.plugins.global_config import global_config
     main_group = int(global_config.qq_main_group)
     self_id = global_config.qq_self_id
     event.payload.workflow_run.name

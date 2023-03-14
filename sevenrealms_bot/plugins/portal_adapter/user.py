@@ -17,8 +17,8 @@ class UserMessageResponse(BaseModel):
 
 @user_app.get("/message/{message_uuid}")
 async def get_message(message_uuid: str) -> UserMessageResponse:
-    require("sevenfield_bot.plguins.db")
-    from sevenfield_bot.plugins.db import Message
+    require("sevenrealms_bot.plguins.db")
+    from sevenrealms_bot.plugins.db import Message
     from pony import orm
     with orm.db_session:
         query_result: List[Message] = orm.select(

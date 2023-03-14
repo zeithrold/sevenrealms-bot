@@ -5,10 +5,10 @@ from .config import config
 
 
 async def message_checker(event: GroupMessageEvent):
-    require("sevenfield_bot.plugins.global_config")
-    require("sevenfield_bot.plugins.message_logging")
-    from sevenfield_bot.plugins.message_logging.config import config as logging_config
-    from sevenfield_bot.plugins.global_config import global_config
+    require("sevenrealms_bot.plugins.global_config")
+    require("sevenrealms_bot.plugins.message_logging")
+    from sevenrealms_bot.plugins.message_logging.config import config as logging_config
+    from sevenrealms_bot.plugins.global_config import global_config
     return str(event.group_id) in logging_config.qq_logging_group and event.raw_message.strip() == f"[CQ:at,qq={global_config.qq_self_id}]"
 
 rule = Rule(message_checker, to_me)

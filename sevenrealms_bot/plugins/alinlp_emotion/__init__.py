@@ -14,8 +14,8 @@ cqreply_matcher = re.compile(r'\[CQ:reply,id=-?[0-9]+\]')
 
 
 async def message_checker(event: GroupMessageEvent):
-    require("sevenfield_bot.plugins.message_logging")
-    from sevenfield_bot.plugins.message_logging.config import config
+    require("sevenrealms_bot.plugins.message_logging")
+    from sevenrealms_bot.plugins.message_logging.config import config
     has_reply_refer = cqreply_matcher.match(event.raw_message)
     has_command = event.raw_message.find("/情感检测") >= 0
     return has_reply_refer and str(event.group_id) in list(config.qq_logging_group) and has_command
@@ -27,8 +27,8 @@ matcher = on_message(rule=rule, block=True)
 
 @matcher.handle()
 async def _(bot: Bot, event: GroupMessageEvent):
-    require("sevenfield_bot.plugins.db")
-    from sevenfield_bot.plugins.db import MessageEmotion, Message
+    require("sevenrealms_bot.plugins.db")
+    from sevenrealms_bot.plugins.db import MessageEmotion, Message
     from pony import orm
     original_message_id = int(
         cqreply_matcher.match(event.raw_message)[0][13:][:-1])

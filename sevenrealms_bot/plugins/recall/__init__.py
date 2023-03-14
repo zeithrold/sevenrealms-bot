@@ -4,8 +4,8 @@ from nonebot.adapters.onebot.v11 import GroupRecallNoticeEvent
 import uuid
 
 async def notice_checker(event: GroupRecallNoticeEvent):
-    require("sevenfield_bot.plugins.message_logging")
-    from sevenfield_bot.plugins.message_logging import config
+    require("sevenrealms_bot.plugins.message_logging")
+    from sevenrealms_bot.plugins.message_logging import config
     return str(event.group_id) in config.qq_logging_group
 
 rule = Rule(notice_checker)
@@ -13,8 +13,8 @@ matcher = on_notice(rule=rule)
 
 @matcher.handle()
 async def _(event: GroupRecallNoticeEvent):
-    require("sevenfield_bot.plugins.db")
-    from sevenfield_bot.plugins.db import Recall
+    require("sevenrealms_bot.plugins.db")
+    from sevenrealms_bot.plugins.db import Recall
     from pony import orm
     with orm.db_session:
         Recall(

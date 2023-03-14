@@ -17,9 +17,9 @@ driver_config = driver.config
 
 @scheduler.scheduled_job(CronTrigger(hour=0, timezone=timezone("Asia/Shanghai")))
 async def _():
-    require("sevenfield_bot.plugins.global_config")
+    require("sevenrealms_bot.plugins.global_config")
 
-    from sevenfield_bot.plugins.global_config import global_config
+    from sevenrealms_bot.plugins.global_config import global_config
 
     bot: Bot = get_bot(global_config.qq_self_id)
     superuser = list(driver_config.superusers)[0]

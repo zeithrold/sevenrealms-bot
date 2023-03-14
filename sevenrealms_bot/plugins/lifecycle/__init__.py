@@ -8,8 +8,8 @@ driver = get_driver()
 
 @driver.on_startup
 def handler():
-    require("sevenfield_bot.plugins.db")
-    from sevenfield_bot.plugins.db import Lifecycle
+    require("sevenrealms_bot.plugins.db")
+    from sevenrealms_bot.plugins.db import Lifecycle
     from pony import orm
     with orm.db_session:
         Lifecycle(time=int(time.time()), type="startup")
@@ -18,8 +18,8 @@ def handler():
 
 @driver.on_shutdown
 def handler():
-    require("sevenfield_bot.plugins.db")
-    from sevenfield_bot.plugins.db import Lifecycle
+    require("sevenrealms_bot.plugins.db")
+    from sevenrealms_bot.plugins.db import Lifecycle
     from pony import orm
     with orm.db_session:
         Lifecycle(time=int(time.time()), type="shutdown")
@@ -28,12 +28,12 @@ def handler():
 
 @driver.on_bot_connect
 def handler(bot: Bot):
-    require("sevenfield_bot.plugins.global_config")
-    from sevenfield_bot.plugins.global_config import global_config
+    require("sevenrealms_bot.plugins.global_config")
+    from sevenrealms_bot.plugins.global_config import global_config
     if isinstance(bot, OnebotBot):
-        require("sevenfield_bot.plugins.db")
+        require("sevenrealms_bot.plugins.db")
         from pony import orm
-        from sevenfield_bot.plugins.db import Lifecycle
+        from sevenrealms_bot.plugins.db import Lifecycle
         with orm.db_session:
             Lifecycle(time=int(time.time()), type="bot_connect")
             orm.commit()
@@ -43,12 +43,12 @@ def handler(bot: Bot):
 
 @driver.on_bot_disconnect
 def handler(bot: Bot):
-    require("sevenfield_bot.plugins.global_config")
-    from sevenfield_bot.plugins.global_config import global_config
+    require("sevenrealms_bot.plugins.global_config")
+    from sevenrealms_bot.plugins.global_config import global_config
     if isinstance(bot, OnebotBot):
-        require("sevenfield_bot.plugins.db")
+        require("sevenrealms_bot.plugins.db")
         from pony import orm
-        from sevenfield_bot.plugins.db import Lifecycle
+        from sevenrealms_bot.plugins.db import Lifecycle
         with orm.db_session:
             Lifecycle(time=int(time.time()), type="bot_connect")
             orm.commit()

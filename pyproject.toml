@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "sevenfield-bot"
+name = "sevenrealms-bot"
 version = "0.1.0"
 description = ""
 authors = ["Zeithrold <zeithrold@gmail.com>"]
 readme = "README.md"
-packages = [{include = "sevenfield_bot"}]
+packages = [{include = "sevenrealms_bot"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -27,7 +27,7 @@ py7zr = "^0.20.2"
 [tool.nonebot]
 # plugins = ["nonebot_plugin_status", "nonebot_plugin_apscheduler"]
 plugins = ["nonebot_plugin_status", "nonebot_plugin_apscheduler"]
-plugin_dirs = ["sevenfield_bot/plugins"]
+plugin_dirs = ["sevenrealms_bot/plugins"]
 
 [tool.poetry.group.dev.dependencies]
 nb-cli = "^0.6.9"

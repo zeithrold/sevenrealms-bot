@@ -13,8 +13,8 @@ require("nonebot_plugin_apscheduler")
 
 @scheduler.scheduled_job(CronTrigger(hour='*/12', timezone=timezone("Asia/Shanghai")))
 async def _():
-    require("sevenfield_bot.plugins.global_config")
-    from sevenfield_bot.plugins.global_config import global_config
+    require("sevenrealms_bot.plugins.global_config")
+    from sevenrealms_bot.plugins.global_config import global_config
     bot: Bot = get_bot(global_config.qq_self_id)
     counts = get_count()
     current_time = time.localtime()

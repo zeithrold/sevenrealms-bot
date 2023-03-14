@@ -6,7 +6,7 @@ matcher = on_command("count")
 
 def get_count() -> int:
     require("seventield_bot.plugins.db")
-    from sevenfield_bot.plugins.db import Message
+    from sevenrealms_bot.plugins.db import Message
     from pony import orm
     with orm.db_session:
         counts = orm.count(m for m in Message)
