@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Zeithrold <zeithrold@gmail.com>"]
 readme = "README.md"
-packages = [{include = "sevenrealms_bot"}]
+packages = [{ include = "sevenrealms_bot" }]
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -26,7 +26,22 @@ py7zr = "^0.20.2"
 
 [tool.nonebot]
 # plugins = ["nonebot_plugin_status", "nonebot_plugin_apscheduler"]
-plugins = ["nonebot_plugin_status", "nonebot_plugin_apscheduler"]
+plugins = [
+    "nonebot_plugin_status",
+    "nonebot_plugin_apscheduler",
+    "nonebot_plugin_simplemusic",
+    "nonebot_plugin_miragetank",
+    "nonebot_plugin_bilibili_viode",
+    "nonebot_plugin_datastore",
+    "nonebot_plugin_dialectlist",
+    "nonebot_plugin_maimai",
+    "nonebot_plugin_groupmate_waifu",
+    "nonebot_plugin_setu_collection",
+    "nonebot_plugin_remove_bg",
+    "nonebot_plugin_jrrp2",
+    "nonebot_plugin_pjsk",
+    "nonebot_plugin_group_whitelist",
+]
 plugin_dirs = ["sevenrealms_bot/plugins"]
 
 [tool.poetry.group.dev.dependencies]
