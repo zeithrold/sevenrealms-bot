@@ -2157,7 +2157,7 @@ nonebot2 = ">=2.0.0"
 [package.source]
 type = "git"
 url = "https://github.com/zeithrold/nonebot_plugin_group_whitelist"
-reference = "HEAD"
+reference = "b9b54e51938e1caf88be3eb0f38a42d3a679828a"
 resolved_reference = "b9b54e51938e1caf88be3eb0f38a42d3a679828a"
 
 [[package]]
@@ -4055,4 +4055,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "6cbc87d9649596301542fb09c2fbaec6cc50b9e12dc3f26d00d9f9d34e15cd7d"
+content-hash = "85887d0e7711a5b15ea337131ab20818db2be47dfef6c5ed9948201bfd69b688"

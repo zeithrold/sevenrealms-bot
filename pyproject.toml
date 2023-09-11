@@ -33,7 +33,7 @@ nonebot-plugin-jrrp2 = "^1.6"
 nonebot-plugin-pjsk = "^0.2.9"
 nonebot-plugin-githubcard = "^0.1.5"
 nonebot-plugin-arxivrss = "^0.1.4"
-nonebot-plugin-group-whitelist = {git = "https://github.com/zeithrold/nonebot_plugin_group_whitelist"}
+nonebot-plugin-group-whitelist = {git = "https://github.com/zeithrold/nonebot_plugin_group_whitelist", rev = "b9b54e51938e1caf88be3eb0f38a42d3a679828a"}
 
 [tool.nonebot]
 plugins = [
