@@ -2142,20 +2142,23 @@ pydantic = ">=1.5.0,<2.0.0"
 
 [[package]]
 name = "nonebot-plugin-group-whitelist"
-version = "0.9.2"
+version = "0.8.0"
 description = "适用于NoneBot2的群聊白名单"
 category = "main"
 optional = false
 python-versions = ">=3.8"
-files = [
-    {file = "nonebot_plugin_group_whitelist-0.9.2-py3-none-any.whl", hash = "sha256:e5bcb4d5e911f229916392ab186c7bbcb74bd16f2853670488c26421b46a2b4e"},
-    {file = "nonebot_plugin_group_whitelist-0.9.2.tar.gz", hash = "sha256:80325cd5b918ae27ed153fc1517be6536ecd6b0a9e085adb990ea7c64ccde6f6"},
-]
+files = []
+develop = false
 
 [package.dependencies]
-nonebot-adapter-onebot = "*"
 nonebot-plugin-localstore = ">=0.5.0"
 nonebot2 = ">=2.0.0"
+
+[package.source]
+type = "git"
+url = "https://github.com/zeithrold/nonebot_plugin_group_whitelist"
+reference = "HEAD"
+resolved_reference = "b9b54e51938e1caf88be3eb0f38a42d3a679828a"
 
 [[package]]
 name = "nonebot-plugin-groupmate-waifu"
@@ -4052,4 +4055,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "e85dc4323860291a225d4d6de43992fdf2f078b87fde3fcd1b835bd7e0525f4d"
+content-hash = "6cbc87d9649596301542fb09c2fbaec6cc50b9e12dc3f26d00d9f9d34e15cd7d"
