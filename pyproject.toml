@@ -36,6 +36,7 @@ nonebot-plugin-group-whitelist = {git = "https://github.com/zeithrold/nonebot_pl
 openai = "<1.0.0"
 nonebot-plugin-naturel-gpt = "^2.1.8"
 nonebot-plugin-htmlrender = "^0.2.2"
+pytest-playwright = "^0.4.3"
 
 [tool.nonebot]
 plugins = [
