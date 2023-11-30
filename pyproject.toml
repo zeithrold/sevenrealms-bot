@@ -50,7 +50,9 @@ plugins = [
     "nonebot_plugin_group_whitelist",
     "nonebot_plugin_pjsk",
     "nonebot_plugin_githubcard",
-    "nonebot_plugin_arxivRSS"
+    "nonebot_plugin_arxivRSS",
+    "nonebot_plugin_naturel_gpt",
+    "nonebot_plugin_htmlrender"
 ]
 plugin_dirs = ["sevenrealms_bot/plugins"]
 
