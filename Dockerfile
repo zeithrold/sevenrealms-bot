@@ -21,6 +21,7 @@ ENV PORT=8080
 ENV PATH="/app/venv/bin:${PATH}"
 
 RUN playwright install
+RUN playwright install-deps
 
 COPY ./ /app/
 
