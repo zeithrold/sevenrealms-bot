@@ -31,7 +31,7 @@ nonebot-plugin-setu-collection = "^0.1.4"
 nonebot-plugin-jrrp2 = "^1.6"
 nonebot-plugin-pjsk = "^0.2.9"
 nonebot-plugin-githubcard = "^0.1.5"
-nonebot-plugin-arxivrss = "^0.1.4"
+nonebot-plugin-arxivrss = {git = "https://github.com/zeithrold/nonebot-plugin-arxivRSS", rev = "c6c0400ba6a570f12801a5c51c111e12484eed3a"}
 nonebot-plugin-group-whitelist = {git = "https://github.com/zeithrold/nonebot_plugin_group_whitelist", rev = "b9b54e51938e1caf88be3eb0f38a42d3a679828a"}
 openai = "<1.0.0"
 nonebot-plugin-naturel-gpt = "^2.1.8"

@@ -2035,23 +2035,27 @@ apscheduler = ">=3.7.0,<4.0.0"
 nonebot2 = ">=2.0.0-rc.1,<3.0.0"
 
 [[package]]
-name = "nonebot-plugin-arxivrss"
-version = "0.1.4"
+name = "nonebot-plugin-arxivRSS"
+version = "0.2.0"
 description = "Plugin of Nonebot2. Subscribe and push Arxiv RSS daliy."
 optional = false
 python-versions = ">=3.8"
-files = [
-    {file = "nonebot_plugin_arxivRSS-0.1.4-py3-none-any.whl", hash = "sha256:e69f39bdb077aa957c8e6d02c7c8b68b474e4226e25b9dd7419d25beebda9bb0"},
-    {file = "nonebot_plugin_arxivRSS-0.1.4.tar.gz", hash = "sha256:03cdb51cf51f8eec3f68582cc8f0a7f8550d05ae8ad2cf5f5d5fe6d089a42122"},
-]
+files = []
+develop = false
 
 [package.dependencies]
 feedparser = "*"
 httpx = ">=0.23.3"
 nonebot-adapter-onebot = "*"
-nonebot-plugin-apscheduler = "*"
-nonebot-plugin-localstore = "*"
+nonebot_plugin_apscheduler = "*"
+nonebot_plugin_localstore = "*"
 nonebot2 = ">=2.0.0"
+
+[package.source]
+type = "git"
+url = "https://github.com/zeithrold/nonebot-plugin-arxivRSS"
+reference = "c6c0400ba6a570f12801a5c51c111e12484eed3a"
+resolved_reference = "c6c0400ba6a570f12801a5c51c111e12484eed3a"
 
 [[package]]
 name = "nonebot-plugin-datastore"
@@ -4243,4 +4247,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "3dde1084e84e265378a48806a7a9f4458046027f3f245e10c5ac42f72a4a9168"
+content-hash = "e25efb03a662b479cae3c01034c80872c687638fdd993cd01131e590a3470ad1"
