@@ -1,5 +1,3 @@
-from . import count
-from . import scheduler
 from nonebot import require, on
 from nonebot.rule import Rule
 from nonebot.adapters.onebot.v11 import GroupMessageEvent
@@ -26,19 +24,15 @@ async def _(event: GroupMessageEvent):
 
     with orm.db_session:
         blacklist_status = get_blacklist_status(event.sender.user_id)
-        sender_id = (
-            event.sender.user_id
-            if (not blacklist_status or event.sender.user_id == None)
-            else 0
-        )
+        sender_id = event.sender.user_id if (not blacklist_status) else 0
         nickname = (
             event.sender.nickname
-            if (not blacklist_status or event.sender.nickname == None)
+            if (not (blacklist_status or event.sender.nickname == None))
             else ""
         )
         group_nickname = (
             event.sender.card
-            if (not blacklist_status or event.sender.card == None)
+            if (not (blacklist_status or event.sender.card == None))
             else ""
         )
         message = event.get_plaintext() if not blacklist_status else ""

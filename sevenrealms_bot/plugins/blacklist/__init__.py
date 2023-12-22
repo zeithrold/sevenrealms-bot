@@ -76,7 +76,7 @@ async def _(bot: Bot, param: BlacklistParam = Depends(depend)):
             "\n"
             f"您可以通过输入 /blacklist toggle 以{'关闭' if param.current_status else '打开'}您的黑名单状态。"
         )
-        await bot.reply(group_id=param.group_id, message=(at + message))
+        await bot.send_group_msg(group_id=param.group_id, message=(at + message))
     else:
         toggled_status = not param.current_status
         require("sevenrealms_bot.plugins.db")

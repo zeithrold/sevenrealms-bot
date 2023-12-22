@@ -48,12 +48,13 @@ class MessageEmotion(db.Entity):
     result = orm.Required(str, max_len=10)
 
 
-db.bind(provider='mysql',
-        host=config.mysql_host,
-        port=config.mysql_port,
-        user=config.mysql_user,
-        passwd=config.mysql_password,
-        db=config.mysql_database,
-        charset='utf8mb4'
-        )
+db.bind(
+    provider="mysql",
+    host=config.mysql_host,
+    port=config.mysql_port,
+    user=config.mysql_user,
+    passwd=config.mysql_password,
+    db=config.mysql_database,
+    charset="utf8mb4",
+)
 db.generate_mapping(create_tables=True)

@@ -3,7 +3,7 @@ from pydantic import BaseModel, Extra
 
 
 class Config(BaseModel, extra=Extra.ignore):
-    mysql_host = '127.0.0.1'
+    mysql_host = "127.0.0.1"
     mysql_port = 3306
     mysql_user: str
     mysql_password: str
