@@ -23,11 +23,24 @@ async def _(event: GroupMessageEvent):
     from sevenrealms_bot.plugins.blacklist import get_blacklist_status
     from sevenrealms_bot.plugins.db import Message
     from pony import orm
+
     with orm.db_session:
         blacklist_status = get_blacklist_status(event.sender.user_id)
-        sender_id = event.sender.user_id if not blacklist_status else 0
-        nickname = event.sender.nickname if not blacklist_status else ""
-        group_nickname = event.sender.card if not blacklist_status else ""
+        sender_id = (
+            event.sender.user_id
+            if (not blacklist_status or event.sender.user_id == None)
+            else 0
+        )
+        nickname = (
+            event.sender.nickname
+            if (not blacklist_status or event.sender.nickname == None)
+            else ""
+        )
+        group_nickname = (
+            event.sender.card
+            if (not blacklist_status or event.sender.card == None)
+            else ""
+        )
         message = event.get_plaintext() if not blacklist_status else ""
         raw_message = event.raw_message if not blacklist_status else ""
         Message(
@@ -41,6 +54,6 @@ async def _(event: GroupMessageEvent):
             message=message,
             raw_message=raw_message,
             anonymous=event.anonymous is not None,
-            blacklisted=blacklist_status
+            blacklisted=blacklist_status,
         )
         orm.commit()
