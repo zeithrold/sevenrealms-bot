@@ -18,5 +18,5 @@ matcher = on_message(rule=rule)
 
 @matcher.handle()
 async def _(bot: Bot, event: GroupMessageEvent):
-    message = f"[CQ:at,qq={event.sender.user_id}]\n{config.about_template}"
-    await bot.send_group_msg(group_id=event.group_id, message=message)
+    message = f"{config.about_template}"
+    await event.reply(message)

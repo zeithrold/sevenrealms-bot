@@ -6,7 +6,7 @@ import os
 from .database import generate_dataset
 from .alioss import bucket
 from nonebot import require, get_bot, get_driver
-from nonebot.adapters.onebot.v11 import Bot
+from nonebot.adapters.onebot.v11 import Bot, MessageSegment
 from nonebot.log import logger
 
 require("nonebot_plugin_apscheduler")
@@ -27,13 +27,17 @@ async def _():
     try:
         await bot.send_group_msg(group_id=group_id, message=f"[备份] 正在备份聊天信息...")
         full_path, file_name = generate_dataset()
-        alioss_file_path = f'message_data/{file_name}'
+        alioss_file_path = f"message_data/{file_name}"
         bucket.put_object_from_file(alioss_file_path, full_path)
         bucket.put_symlink(alioss_file_path, "message_data/latest.7z")
         os.remove(full_path)
-        await bot.send_group_msg(group_id=group_id, message=f'[CQ:at,qq={superuser}][备份]文件 "{file_name}" 上传成功。')
+        at = MessageSegment.at(superuser)
+        message = MessageSegment.text(f"[备份]文件备份成功，文件名为：{file_name}")
+        await bot.send_group_msg(group_id=group_id, message=(at + message))
     except Exception as e:
         logger.warning("文件备份出现了问题，错误信息如下：")
         logger.warning(e)
-        await bot.send_group_msg(group_id=group_id, message=f"[CQ:at,qq={superuser}][备份]文件上传失败，请查看控制台。")
+        at = MessageSegment.at(superuser)
+        message = MessageSegment.text(f"[备份]文件备份失败，请查看控制台。")
+        await bot.send_group_msg(group_id=group_id, message=(at + message))
         return

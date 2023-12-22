@@ -15,4 +15,4 @@ def get_count() -> int:
 @matcher.handle()
 async def _(bot: Bot, event: GroupMessageEvent):
     counts = get_count()
-    await bot.send_group_msg(group_id=event.group_id, message=f"[CQ:reply,id={event.message_id}]目前记录的消息数量为：{counts}")
+    await event.reply(f"目前记录的消息数量为：{counts}")
