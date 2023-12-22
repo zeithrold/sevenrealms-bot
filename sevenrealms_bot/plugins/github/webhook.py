@@ -30,7 +30,7 @@ async def _(event: PushEvent):
     )
     at = MessageSegment.at(superuser)
     message = MessageSegment.text(
-        "[GitHub]\n"
+        " [GitHub]\n"
         f"您的项目 {event.payload.repository.full_name} 已经提交 {last_commit_sha} 等共{commit_counts}个Git Commit。\n"
         "具体Commit列表如下:\n"
         f"{commit_str}"
@@ -47,7 +47,7 @@ async def _(event: PingEvent):
     self_id = global_config.qq_self_id
     bot: Bot = get_bot(self_id)
     at = MessageSegment.at(superuser)
-    message = MessageSegment.text("[GitHub]刚才GitHub给您发送了一个Ping。")
+    message = MessageSegment.text(" [GitHub]刚才GitHub给您发送了一个Ping。")
     await bot.send_group_msg(
         group_id=main_group,
         message=(at + message),
@@ -65,7 +65,7 @@ async def _(event: WorkflowRunRequested):
     bot: Bot = get_bot(self_id)
     at = MessageSegment.at(superuser)
     message = MessageSegment.text(
-        "[GitHub]\n"
+        " [GitHub]\n"
         f"您的项目 {event.payload.repository.full_name} 已触发 Workflow Run: \n"
         f"{event.payload.workflow_run.path} #{event.payload.workflow_run.run_number}\n"
         "详情请点击链接：\n"
@@ -85,7 +85,7 @@ async def _(event: WorkflowRunCompleted):
     bot: Bot = get_bot(self_id)
     at = MessageSegment.at(superuser)
     message = MessageSegment.text(
-        "[GitHub]\n"
+        " [GitHub]\n"
         f"您的项目 {event.payload.repository.full_name} 已完成 Workflow Run: \n"
         f"{event.payload.workflow_run.path} #{event.payload.workflow_run.run_number}\n"
         f'运行结果：{"成功" if event.payload.workflow_run.conclusion == "success" else "异常"}\n'

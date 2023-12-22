@@ -93,7 +93,7 @@ async def _(bot: Bot, param: BlacklistParam = Depends(depend)):
             orm.commit()
         at = MessageSegment.at(param.operator_id)
         message = MessageSegment.text(
-            f"您已将您的黑名单状态更改为：{'开启' if toggled_status else '关闭'}"
+            f"\n您已将您的黑名单状态更改为：{'开启' if toggled_status else '关闭'}"
             "\n"
             f"小小Z将{'不会' if toggled_status else '会'}收集您的聊天记录信息。"
             f"{'为保证数据集完整性，小小Z将用抹去QQ号码、昵称、群名片与聊天内容的空白占位符替代聊天信息记录。' if toggled_status else ''}"

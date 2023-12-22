@@ -12,6 +12,6 @@ async def _(bot: Bot, event: GroupMessageEvent):
     first_commit = api.repos.list_commits(owner="zeithrold", repo="sevenrealms-bot")[0]
     group_id = event.group_id
     message = MessageSegment.at(event.user_id) + MessageSegment.text(
-        f"[GitHub]最近一次部署的Git Commit: {first_commit.sha[:8]}"
+        f" [GitHub]最近一次部署的Git Commit: {first_commit.sha[:8]}"
     )
     await bot.send_group_msg(group_id=group_id, message=message)

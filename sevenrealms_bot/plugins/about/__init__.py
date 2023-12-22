@@ -23,7 +23,7 @@ matcher = on_message(rule=rule)
 
 @matcher.handle()
 async def _(bot: Bot, event: GroupMessageEvent):
-    message = f"{config.about_template}"
+    message = f" {config.about_template}"
     group_id = event.group_id
     message = MessageSegment.at(event.user_id) + MessageSegment.text(message)
     await bot.send_group_msg(group_id=group_id, message=message)

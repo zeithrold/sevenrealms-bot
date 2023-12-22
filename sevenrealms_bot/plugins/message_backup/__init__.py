@@ -32,12 +32,12 @@ async def _():
         bucket.put_symlink(alioss_file_path, "message_data/latest.7z")
         os.remove(full_path)
         at = MessageSegment.at(superuser)
-        message = MessageSegment.text(f"[备份]文件备份成功，文件名为：{file_name}")
+        message = MessageSegment.text(f" [备份]文件备份成功，文件名为：{file_name}")
         await bot.send_group_msg(group_id=group_id, message=(at + message))
     except Exception as e:
         logger.warning("文件备份出现了问题，错误信息如下：")
         logger.warning(e)
         at = MessageSegment.at(superuser)
-        message = MessageSegment.text(f"[备份]文件备份失败，请查看控制台。")
+        message = MessageSegment.text(f" [备份]文件备份失败，请查看控制台。")
         await bot.send_group_msg(group_id=group_id, message=(at + message))
         return

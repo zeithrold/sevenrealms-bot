@@ -19,6 +19,6 @@ async def _(bot: Bot, event: GroupMessageEvent):
     counts = get_count()
     group_id = event.group_id
     message = MessageSegment.at(event.user_id) + MessageSegment.text(
-        f"目前记录的消息数量为：{counts}"
+        f" 目前记录的消息数量为：{counts}"
     )
     await bot.send_group_msg(group_id=group_id, message=message)
