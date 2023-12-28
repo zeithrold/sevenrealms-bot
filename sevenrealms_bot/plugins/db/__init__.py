@@ -48,6 +48,15 @@ class MessageEmotion(db.Entity):
     result = orm.Required(str, max_len=10)
 
 
+class Alias(db.Entity):
+    qq = orm.Required(int, size=64)
+    alia = orm.Required(str, max_len=128)
+
+
+class MemberGroup(db.Entity):
+    qq = orm.Required(int, size=64)
+    group_id = orm.Required(str, max_len=128)
+
 db.bind(
     provider="mysql",
     host=config.mysql_host,

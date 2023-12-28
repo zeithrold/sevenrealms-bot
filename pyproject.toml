@@ -32,7 +32,7 @@ nonebot-plugin-jrrp2 = "^1.6"
 nonebot-plugin-pjsk = "^0.2.9"
 nonebot-plugin-githubcard = "^0.1.5"
 nonebot-plugin-arxivrss = {git = "https://github.com/zeithrold/nonebot-plugin-arxivRSS", rev = "c6c0400ba6a570f12801a5c51c111e12484eed3a"}
-nonebot-plugin-group-whitelist = {git = "https://github.com/zeithrold/nonebot_plugin_group_whitelist", rev = "b9b54e51938e1caf88be3eb0f38a42d3a679828a"}
+redis = {extras = ["hiredis"], version = "^5.0.1"}
 
 
 [tool.nonebot]
@@ -45,7 +45,6 @@ plugins = [
     "nonebot_plugin_groupmate_waifu",
     "nonebot_plugin_setu_collection",
     "nonebot_plugin_jrrp2",
-    "nonebot_plugin_group_whitelist",
     "nonebot_plugin_pjsk",
     "nonebot_plugin_githubcard",
     "nonebot_plugin_arxivRSS"

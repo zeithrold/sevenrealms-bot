@@ -19,7 +19,6 @@ def get_blacklist_status(operator_id: int) -> bool:
     require("sevenrealms_bot.plugins.db")
     from sevenrealms_bot.plugins.db import Blacklist
     from pony import orm
-
     with orm.db_session:
         counts = orm.select(
             b for b in Blacklist if b.operator_id == operator_id

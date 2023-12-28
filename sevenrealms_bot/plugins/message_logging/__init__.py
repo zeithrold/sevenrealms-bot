@@ -11,7 +11,7 @@ async def message_checker(event: GroupMessageEvent):
 
 rule = Rule(message_checker)
 
-matcher = on(rule=rule, priority=-2)
+matcher = on(rule=rule, priority=-1, block=False)
 
 
 @matcher.handle()
