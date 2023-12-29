@@ -4,7 +4,7 @@ from typing import Set
 
 
 class Config(BaseModel, extra=Extra.ignore):
-    qq_blacklist_group: Set[str] = []
+    qq_blacklist_group: Set[str] = set()
 
 
 _driver = get_driver()

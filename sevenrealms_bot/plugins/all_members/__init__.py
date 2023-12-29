@@ -1,15 +1,25 @@
-from nonebot import require, get_bot, on_command
-from nonebot.log import logger
-from nonebot.adapters.onebot.v11.bot import Bot
-from nonebot_plugin_apscheduler import scheduler
-from apscheduler.triggers.cron import CronTrigger
-from pytz import timezone
-from typing import Dict
-from .types import Group, AccountInfo
-import json
+from nonebot import require
 
-matcher = on_command("refresh_cache")
 require("nonebot_plugin_apscheduler")
+require("redis")
+require("global_config")
+
+import json
+from typing import Dict
+
+from apscheduler.triggers.cron import CronTrigger
+from nonebot import get_bot, on_command
+from nonebot.adapters.onebot.v11.bot import Bot
+from nonebot.log import logger
+from nonebot.permission import SUPERUSER
+from nonebot_plugin_apscheduler import scheduler
+from pytz import timezone
+from sevenrealms_bot.plugins.global_config import global_config
+from sevenrealms_bot.plugins.redis import client
+
+from .types import AccountInfo, Group
+
+matcher = on_command("refresh_cache", permission=SUPERUSER)
 
 
 @matcher.handle()
@@ -24,15 +34,9 @@ scheduled = scheduler.scheduled_job(
 
 
 async def refresh_cache():
-    require("sevenrealms_bot.plugins.global_config")
-    from sevenrealms_bot.plugins.global_config import global_config
-
     qq_self_id = global_config.qq_self_id
     logger.info("Refreshing cache...")
-    require("sevenrealms_bot.plugins.redis")
-    from sevenrealms_bot.plugins.redis import client
-
-    bot: Bot = get_bot(qq_self_id)
+    bot: Bot = get_bot(qq_self_id)  # type: ignore
     group_list = await bot.get_group_list()
     group_list = [Group(g) for g in group_list]
     group_length = len(group_list)
@@ -48,23 +52,20 @@ async def refresh_cache():
     key_prefix = "srbot_account://"
     # delete all keys
     logger.debug("Deleting all keys...")
-    keys = client.keys(key_prefix + "*")
+    keys = await client.keys(key_prefix + "*")
     for key in keys:
-        client.delete(key)
+        await client.delete(key)
     for key in account_list:
-        client.set(key_prefix + key, json.dumps(account_list[key].__dict__))
+        await client.set(key_prefix + key, json.dumps(account_list[key].__dict__))
     logger.success("Cache refreshed.")
 
 
 scheduled(refresh_cache)
 
 
-def get_account_info(user_id: int) -> AccountInfo | None:
-    require("sevenrealms_bot.plugins.redis")
-    from sevenrealms_bot.plugins.redis import client
-
+async def get_account_info(user_id: int) -> AccountInfo | None:
     key_prefix = "srbot_account://"
-    raw = client.get(key_prefix + str(user_id))
+    raw = await client.get(key_prefix + str(user_id))
     if raw is None:
         return None
     return AccountInfo(json.loads(raw))

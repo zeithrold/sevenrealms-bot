@@ -1,8 +1,18 @@
-from nonebot import on_command, require
-from nonebot.params import CommandArg
-from nonebot.adapters.onebot.v11 import Message
+from nonebot import require
 
-matcher = on_command("alias")
+require("nonebot_plugin_datastore")
+
+from nonebot import on_command
+from nonebot.adapters.onebot.v11 import Message
+from nonebot.params import CommandArg, Depends
+from nonebot.permission import SUPERUSER
+from nonebot_plugin_datastore import get_session
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio.session import AsyncSession
+
+from .model import Alias
+
+matcher = on_command("alias", permission=SUPERUSER)
 
 help_text = """参数：
 /alias set <QQ号> <别名>
@@ -11,7 +21,9 @@ help_text = """参数：
 
 
 @matcher.handle()
-async def handle(args: Message = CommandArg()):
+async def handle(
+    args: Message = CommandArg(), session: AsyncSession = Depends(get_session)
+):
     param = args.extract_plain_text()
     if not param:
         await matcher.finish(help_text)
@@ -28,17 +40,17 @@ async def handle(args: Message = CommandArg()):
             alias = splited_params[2]
         except IndexError:
             await matcher.finish(help_text)
-        set_alias(qq, alias)
+        await set_alias(qq, alias, session)
         await matcher.finish(f"已将QQ号{qq}的别名设置为{alias}。")
     elif action == "get":
         try:
-            alias = get_alias(qq)
+            alias = await get_alias(qq, session)
         except ValueError:
             await matcher.finish(f"QQ号{qq}没有设置别名。")
         await matcher.finish(f"QQ号{qq}的别名为{alias}。")
     elif action == "delete":
         try:
-            delete_alias(qq)
+            await delete_alias(qq, session)
         except ValueError:
             await matcher.finish(f"QQ号{qq}没有设置别名。")
         await matcher.finish(f"已删除QQ号{qq}的别名。")
@@ -46,47 +58,32 @@ async def handle(args: Message = CommandArg()):
         await matcher.finish(help_text)
 
 
-def get_alias(qq: int):
-    require("sevenrealms_bot.plugins.db")
-    from sevenrealms_bot.plugins.db import Alias
-    from pony import orm
-
-    with orm.db_session:
-        counts = orm.select(a for a in Alias if a.qq == qq).count()
-        if counts >= 1:
-            latest_alias = orm.select(a for a in Alias if a.qq == qq).limit(1)[0]
-            current_alias = latest_alias.alia
-        else:
-            current_alias = None
-    return current_alias
+async def get_alias(qq: int, session: AsyncSession):
+    alias = (
+        await session.execute(select(Alias).where(Alias.qq == qq))
+    ).scalar_one_or_none()
+    if alias is None:
+        raise ValueError("No alias found.")
+    return alias.alias
 
 
-def set_alias(qq: int, alias: str) -> None:
-    require("sevenrealms_bot.plugins.db")
-    from sevenrealms_bot.plugins.db import Alias
-    from pony import orm
+async def set_alias(qq: int, alias: str, session: AsyncSession):
+    alias_obj = (
+        await session.execute(select(Alias).where(Alias.qq == qq))
+    ).scalar_one_or_none()
+    if alias_obj is None:
+        alias_obj = Alias(qq=qq, alias=alias)
+        session.add(alias_obj)
+    else:
+        alias_obj.alias = alias
+    await session.commit()
 
-    with orm.db_session:
-        alias_query = orm.select(a for a in Alias if a.qq == qq)
-        exists = alias_query.count() >= 1
-        if exists:
-            alias_objs = alias_query[:]
-            for a in alias_objs:
-                a.alias = alias
-        else:
-            Alias(qq=qq, alia=alias)
-        orm.commit()
 
-def delete_alias(qq: int) -> None:
-    require("sevenrealms_bot.plugins.db")
-    from sevenrealms_bot.plugins.db import Alias
-    from pony import orm
-
-    with orm.db_session:
-        alias_query = orm.select(a for a in Alias if a.qq == qq)
-        exists = alias_query.count() >= 1
-        if exists:
-            alias_query.delete()
-            orm.commit()
-        else:
-            raise ValueError("No alias found.")
+async def delete_alias(qq: int, session: AsyncSession) -> None:
+    alias_obj = (
+        await session.execute(select(Alias).where(Alias.qq == qq))
+    ).scalar_one_or_none()
+    if alias_obj is None:
+        raise ValueError("No alias found.")
+    await session.delete(alias_obj)
+    await session.commit()

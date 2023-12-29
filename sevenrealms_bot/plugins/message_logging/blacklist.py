@@ -1,8 +1,14 @@
-from nonebot import on_command, require
+import uuid
+
+from nonebot import on_command
+from nonebot.adapters.onebot.v11 import Bot, GroupMessageEvent, MessageSegment
 from nonebot.params import Depends
 from nonebot.rule import Rule
-from nonebot.adapters.onebot.v11 import Bot, GroupMessageEvent, MessageSegment
-import uuid
+from nonebot_plugin_datastore import get_session
+from sqlalchemy import func, select
+from sqlalchemy.ext.asyncio.session import AsyncSession
+
+from .model import BlackList
 
 
 async def command_checker(event: GroupMessageEvent):
@@ -14,22 +20,24 @@ rule = Rule(command_checker)
 matcher = on_command("blacklist", rule=rule)
 
 
-def get_blacklist_status(operator_id: int) -> bool:
+async def get_blacklist_status(operator_id: int, session: AsyncSession) -> bool:
     current_status = False
-    require("sevenrealms_bot.plugins.db")
-    from sevenrealms_bot.plugins.db import Blacklist
-    from pony import orm
-    with orm.db_session:
-        counts = orm.select(
-            b for b in Blacklist if b.operator_id == operator_id
-        ).count()
-        if counts >= 1:
-            latest_blacklist_log = (
-                orm.select(b for b in Blacklist if b.operator_id == operator_id)
-                .order_by(orm.desc(Blacklist.time))
-                .limit(1)[0]
+
+    counts = (
+        await session.execute(
+            select(func.count(BlackList.id)).where(BlackList.operator_id == operator_id)
+        )
+    ).scalar_one()
+    if counts >= 1:
+        latest_blacklist_log = (
+            await session.execute(
+                select(BlackList)
+                .where(BlackList.operator_id == operator_id)
+                .order_by(BlackList.time.desc())
+                .limit(1)
             )
-            current_status = latest_blacklist_log.status
+        ).scalar_one()
+        current_status = latest_blacklist_log.status
     return current_status
 
 
@@ -51,12 +59,12 @@ class BlacklistParam:
         self.group_id = group_id
 
 
-async def depend(event: GroupMessageEvent):
+async def depend(event: GroupMessageEvent, session: AsyncSession = Depends(get_session)):
     command_name = "status" if event.raw_message.strip() == "/blacklist" else "toggle"
     operator_id = event.user_id
     message_id = event.message_id
     time = event.time
-    current_status = get_blacklist_status(operator_id)
+    current_status = await get_blacklist_status(operator_id, session)
     group_id = event.group_id
     return BlacklistParam(
         operator_id, current_status, command_name, message_id, time, group_id
@@ -64,7 +72,11 @@ async def depend(event: GroupMessageEvent):
 
 
 @matcher.handle()
-async def _(bot: Bot, param: BlacklistParam = Depends(depend)):
+async def _(
+    bot: Bot,
+    param: BlacklistParam = Depends(depend),
+    session: AsyncSession = Depends(get_session),
+):
     if param.command_name == "status":
         at = MessageSegment.at(param.operator_id)
         message = MessageSegment.text(
@@ -78,18 +90,14 @@ async def _(bot: Bot, param: BlacklistParam = Depends(depend)):
         await bot.send_group_msg(group_id=param.group_id, message=(at + message))
     else:
         toggled_status = not param.current_status
-        require("sevenrealms_bot.plugins.db")
-        from sevenrealms_bot.plugins.db import Blacklist
-        from pony import orm
-
-        with orm.db_session:
-            Blacklist(
-                time=param.time,
-                uuid=str(uuid.uuid4()),
-                status=toggled_status,
-                operator_id=param.operator_id,
-            )
-            orm.commit()
+        blacklist = BlackList(
+            time=param.time,
+            uuid=str(uuid.uuid4()),
+            status=toggled_status,
+            operator_id=param.operator_id,
+        )
+        session.add(blacklist)
+        await session.commit()
         at = MessageSegment.at(param.operator_id)
         message = MessageSegment.text(
             f"\n您已将您的黑名单状态更改为：{'开启' if toggled_status else '关闭'}"

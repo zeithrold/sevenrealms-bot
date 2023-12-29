@@ -25,4 +25,4 @@ ENV PATH="/app/venv/bin:${PATH}"
 
 COPY ./ /app/
 
-CMD uvicorn --workers 1 --env-file .env.prod --port 8080 --host 0.0.0.0 bot:app
+CMD nb datastore upgrade && uvicorn --workers 1 --env-file .env.prod --port 8080 --host 0.0.0.0 bot:app

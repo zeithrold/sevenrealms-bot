@@ -1,4 +1,5 @@
-from redis import Redis
+from redis.asyncio.client import Redis
+from nonebot import get_driver
 from nonebot.log import logger
 from .config import config
 
@@ -9,6 +10,10 @@ client = Redis(
     decode_responses=True
 )
 
-logger.info("Redis connected.")
-client.ping()
-logger.info("Redis pinged.")
+driver = get_driver()
+
+@driver.on_startup
+async def _():
+    logger.info("Redis connected.")
+    await client.ping()
+    logger.info("Redis pinged.")
