@@ -3,6 +3,7 @@ from nonebot import require
 require("nonebot_plugin_datastore")
 require("all_members")
 require("alias")
+import random
 from typing import List
 
 from nonebot import on_command
@@ -11,6 +12,8 @@ from nonebot.log import logger
 from nonebot.params import CommandArg, Depends
 from nonebot.permission import SUPERUSER
 from nonebot_plugin_datastore import get_session
+from sevenrealms_bot.plugins.alias import get_alias
+from sevenrealms_bot.plugins.all_members import get_account_info
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
@@ -22,7 +25,8 @@ help_text = """参数：
 /group set <QQ号> <群组ID>
 /group delete <QQ号> <群组ID>
 /group get <QQ号>
-/group list <群组ID> (需要在群聊中使用)
+/group list <群组ID>
+/group random <群组ID>
 """
 
 
@@ -70,13 +74,11 @@ async def handle(
             await matcher.finish(help_text)
         await delete_group(qq, group_id, session)
         await matcher.finish(f"已将QQ号{qq}从群组{group_id}中删除。")
-    elif action == "list":
+    elif (action == "list" or action == "random"):
         try:
             group_id = splited_params[1]
         except IndexError:
             await matcher.finish(help_text)
-        from sevenrealms_bot.plugins.alias import get_alias
-        from sevenrealms_bot.plugins.all_members import get_account_info
         try:
             members = await list_group(group_id, session)
         except ValueError:
@@ -95,8 +97,12 @@ async def handle(
                 usernames.append(f"{account_info.nickname} ({member})")
             else:
                 usernames.append(f"未知用户 ({member})")
-        return_str = f"群组{group_id}的成员为：\n"
-        return_str += "\n".join(usernames)
+        if action == "list":
+            return_str = f"群组{group_id}的成员为：\n"
+            return_str += "\n".join(usernames)
+        else:
+            random.shuffle(usernames)
+            return_str = f"中奖的成员为：{usernames[0]}"
         await matcher.finish(return_str)
     else:
         await matcher.finish(help_text)
