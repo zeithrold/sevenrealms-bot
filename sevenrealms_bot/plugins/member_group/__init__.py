@@ -85,7 +85,10 @@ async def handle(
         usernames: List[str] = []
         for member in members:
             account_info = await get_account_info(member)
-            alias = await get_alias(member, session)
+            try:
+                alias = await get_alias(member, session)
+            except ValueError:
+                alias = None
             if alias is not None:
                 usernames.append(f"{alias} ({member})")
             elif account_info is not None:
