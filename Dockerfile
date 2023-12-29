@@ -1,4 +1,4 @@
-FROM python:3.9 as venv
+FROM python:3.11 as venv
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ ADD requirements.txt /app/requirements.txt
 
 RUN pip install -Ur requirements.txt
 
-FROM python:3.9
+FROM python:3.11
 
 WORKDIR /app/
 
