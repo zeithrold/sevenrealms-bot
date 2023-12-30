@@ -17,10 +17,10 @@ group = CommandGroup("fortune")
 
 main_cmd = group.command(tuple())
 
+
 @main_cmd.handle()
 async def generate_fortune(
-    event: MessageEvent, 
-    session: AsyncSession = Depends(get_session)
+    event: MessageEvent, session: AsyncSession = Depends(get_session)
 ):
     sender_id = event.sender.user_id
     if sender_id is None:
@@ -28,7 +28,11 @@ async def generate_fortune(
     # Generate today string, format: YYYY-MM-DD
     today = datetime.now().strftime("%Y-%m-%d")
     # Check if today's fortune exists
-    fortune = (await session.execute(select(Fortune).where(Fortune.day == today))).scalar_one_or_none()
+    fortune = (
+        await session.execute(
+            select(Fortune).where(Fortune.day == today).where(Fortune.qq == sender_id)
+        )
+    ).scalar_one_or_none()
     if fortune is None:
         fortune = Fortune(qq=sender_id, fortune=random.randint(1, 100), day=today)
         session.add(fortune)
