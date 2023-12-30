@@ -2,24 +2,26 @@ from nonebot import require
 
 require("nonebot_plugin_apscheduler")
 require("redis")
-require("global_config")
 
 import json
 from typing import Dict
 
 from apscheduler.triggers.cron import CronTrigger
-from nonebot import get_bot, on_command
+from nonebot import get_bot, get_driver, on_command
 from nonebot.adapters.onebot.v11.bot import Bot
 from nonebot.log import logger
 from nonebot.permission import SUPERUSER
 from nonebot_plugin_apscheduler import scheduler
 from pytz import timezone
-from sevenrealms_bot.plugins.global_config import global_config
 from sevenrealms_bot.plugins.redis import client
 
+from .config import Config
 from .types import AccountInfo, Group
 
 matcher = on_command("refresh_cache", permission=SUPERUSER)
+
+driver = get_driver()
+config = Config.parse_obj(driver.config)
 
 
 @matcher.handle()
@@ -34,7 +36,7 @@ scheduled = scheduler.scheduled_job(
 
 
 async def refresh_cache():
-    qq_self_id = global_config.qq_self_id
+    qq_self_id = config.qq_self_id
     logger.info("Refreshing cache...")
     bot: Bot = get_bot(qq_self_id)  # type: ignore
     group_list = await bot.get_group_list()

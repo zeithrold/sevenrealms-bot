@@ -8,12 +8,13 @@ from nonebot.permission import SUPERUSER
 from nonebot_plugin_apscheduler import scheduler
 from nonebot_plugin_datastore import create_session
 from pytz import timezone
-from sevenrealms_bot.plugins.global_config import global_config
+
 
 matcher = on_command("backup", permission=SUPERUSER)
 
 from .alioss import bucket
 from .file import generate_dataset
+from .config import config
 
 driver = get_driver()
 driver_config = driver.config
@@ -23,9 +24,9 @@ job = scheduler.scheduled_job(CronTrigger(hour=0, timezone=timezone("Asia/Shangh
 
 
 async def backup_handler():
-    bot: Bot = get_bot(global_config.qq_self_id)  # type: ignore
+    bot: Bot = get_bot(config.qq_self_id)  # type: ignore
     superuser = list(driver_config.superusers)[0]
-    group_id = int(global_config.qq_main_group)
+    group_id = int(config.qq_main_group)
     try:
         await bot.send_group_msg(group_id=group_id, message=f"[备份] 正在备份聊天信息...")
         async with create_session() as session:

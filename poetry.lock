@@ -2216,20 +2216,6 @@ nonebot2 = "*"
 pil-utils = "*"
 
 [[package]]
-name = "nonebot-plugin-jrrp2"
-version = "1.6"
-description = "nonebot2带数据库可查询历史平均人品的jrrp插件"
-optional = false
-python-versions = "*"
-files = [
-    {file = "nonebot_plugin_jrrp2-1.6.tar.gz", hash = "sha256:838bd50b453f1c05b4900ae97b81ff426b8129b58154fec9bbabaf3ba73acfa2"},
-]
-
-[package.dependencies]
-nonebot-adapter-onebot = "*"
-nonebot2 = "*"
-
-[[package]]
 name = "nonebot-plugin-localstore"
 version = "0.5.1"
 description = "Local Storage Support for NoneBot2"
@@ -2458,10 +2444,10 @@ files = [
 [package.dependencies]
 numpy = [
     {version = ">=1.21.0", markers = "python_version == \"3.9\" and platform_system == \"Darwin\" and platform_machine == \"arm64\""},
-    {version = ">=1.23.5", markers = "python_version >= \"3.11\""},
     {version = ">=1.21.4", markers = "python_version >= \"3.10\" and platform_system == \"Darwin\" and python_version < \"3.11\""},
     {version = ">=1.21.2", markers = "platform_system != \"Darwin\" and python_version >= \"3.10\" and python_version < \"3.11\""},
     {version = ">=1.19.3", markers = "platform_system == \"Linux\" and platform_machine == \"aarch64\" and python_version >= \"3.8\" and python_version < \"3.10\" or python_version > \"3.9\" and python_version < \"3.10\" or python_version >= \"3.9\" and platform_system != \"Darwin\" and python_version < \"3.10\" or python_version >= \"3.9\" and platform_machine != \"arm64\" and python_version < \"3.10\""},
+    {version = ">=1.23.5", markers = "python_version >= \"3.11\""},
 ]
 
 [[package]]
@@ -4080,4 +4066,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "85b08a11fb63e88896cf166726554f014928add85ca650b7ca5a922f61f95a19"
+content-hash = "d8dadac0a4f8611964e3cf52ad757b0578dd927c1aae58395eaa69d3345d995b"

@@ -2,7 +2,6 @@ from nonebot import require
 
 require("nonebot_plugin_datastore")
 require("nonebot_plugin_apscheduler")
-require("global_config")
 
 import uuid
 
