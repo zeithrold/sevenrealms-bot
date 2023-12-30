@@ -30,14 +30,17 @@ async def generate_fortune(
     # Check if today's fortune exists
     fortune = (
         await session.execute(
-            select(Fortune).where(Fortune.day == today).where(Fortune.qq == sender_id)
+            select(Fortune).where(Fortune.day == today).where(Fortune.qq == sender_id).limit(1)
         )
-    ).scalar_one_or_none()
+    ).scalars().first()
     if fortune is None:
-        fortune = Fortune(qq=sender_id, fortune=random.randint(1, 100), day=today)
+        fortune_point = random.randint(1, 100)
+        fortune = Fortune(qq=sender_id, fortune=fortune_point, day=today)
         session.add(fortune)
         await session.commit()
-    return_msg = f"今日运势：{fortune.fortune}"
+    else:
+        fortune_point = fortune.fortune
+    return_msg = f"今日运势：{fortune_point}"
     if event.message_type == "group":
         return_msg = MessageSegment.at(sender_id) + return_msg
     await main_cmd.finish(return_msg)

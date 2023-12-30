@@ -115,8 +115,9 @@ async def set_group(qq: int, group_id: str, session: AsyncSession):
             .where(MemberGroup.qq == qq)
             .where(MemberGroup.group_id == group_id)
         )
-    ).scalar_one_or_none()
+    ).scalar_one()
     if member is None:
+        
         member = MemberGroup(qq=qq, group_id=group_id)
         session.add(member)
         await session.commit()
