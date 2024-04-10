@@ -1,19 +1,16 @@
-import os
-
 from apscheduler.triggers.cron import CronTrigger
 from nonebot import get_bot, get_driver, on_command
 from nonebot.adapters.onebot.v11 import Bot, MessageSegment
 from nonebot.log import logger
 from nonebot.permission import SUPERUSER
 from nonebot_plugin_apscheduler import scheduler
-from nonebot_plugin_datastore import create_session
+from datasets import Dataset
 from pytz import timezone
+import datetime
 
 
 matcher = on_command("backup", permission=SUPERUSER)
 
-from .alioss import bucket
-from .file import generate_dataset
 from .config import config
 
 driver = get_driver()
@@ -29,16 +26,12 @@ async def backup_handler():
     group_id = int(config.qq_main_group)
     try:
         await bot.send_group_msg(group_id=group_id, message=f"[备份] 正在备份聊天信息...")
-        async with create_session() as session:
-            full_path, file_name = await generate_dataset(session)
-        alioss_file_path = f"message_data/{file_name}"
-        logger.info('Uploading to Aliyun OSS...')
-        bucket.put_object_from_file(alioss_file_path, full_path)
-        bucket.put_symlink(alioss_file_path, "message_data/latest.7z")
-        logger.success('Successfully upload file to Aliyun OSS.')
-        os.remove(full_path)
+        dataset = Dataset.from_sql("message", config.datastore_database_url)
+        date = datetime.datetime.now(tz=datetime.timezone.utc).isoformat()
+        commit_message = f"Auto-backup at {date}"
+        dataset.push_to_hub(config.hf_repo, private=True, token=config.hf_token, commit_message=commit_message)
         at = MessageSegment.at(superuser)
-        message = MessageSegment.text(f" [备份]文件备份成功，文件名为：{file_name}")
+        message = MessageSegment.text(f" [备份]成功备份至HuggingFace.")
         await bot.send_group_msg(group_id=group_id, message=(at + message))
     except Exception as e:
         logger.warning("文件备份出现了问题，错误信息如下：")
