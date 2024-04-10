@@ -26,7 +26,10 @@ async def backup_handler():
     group_id = int(config.qq_main_group)
     try:
         await bot.send_group_msg(group_id=group_id, message=f"[备份] 正在备份聊天信息...")
-        dataset = Dataset.from_sql("message", config.datastore_database_url)
+        database_url = config.datastore_database_url
+        if "aiomysql" in database_url:
+            database_url = database_url.replace("aiomysql", "pymysql")
+        dataset = Dataset.from_sql("message", con=database_url)
         date = datetime.datetime.now(tz=datetime.timezone.utc).isoformat()
         commit_message = f"Auto-backup at {date}"
         dataset.push_to_hub(config.hf_repo, private=True, token=config.hf_token, commit_message=commit_message)
