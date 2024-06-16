@@ -1,7 +1,9 @@
+import firebase_admin
 import nonebot
 
 from nonebot.adapters.onebot.v11 import Adapter as ONEBOT_V11Adapter
 
+firebase_admin.initialize_app()
 # Custom your logger
 #
 # from nonebot.log import logger, default_format
