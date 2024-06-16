@@ -22,7 +22,9 @@
 				"esbenp.prettier-vscode",
 				"donjayamanne.python-extension-pack",
 				"editorconfig.editorconfig",
-				"donjayamanne.python-environment-manager"
+				"donjayamanne.python-environment-manager",
+				"omnilib.ufmt",
+				"ms-azuretools.vscode-docker"
 			]
 		}
 	}
